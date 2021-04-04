@@ -27,8 +27,14 @@ tFilme* criaFilme(char *titulo, char *descricao, float nota, int duracao, int an
 tFilme** leFilmes(char *fileName);
 
 /**
+ * @brief Imprime a descrição de um determinado Filme ignorando o caractere ' " '.
+ * @param filme Ponteiro do filme que contém a descrição em questão.
+ **/
+void imprimeDescricao(tFilme *filme);
+
+/**
  * @brief Imprime os dados de um ponteiro para filme.
- * @param filme Filme a ser imprimido.
+ * @param filme Ponteiro do filme a ser imprimido.
  **/
 void imprimeFilme(tFilme *filme);
 
@@ -64,5 +70,7 @@ void imprimePagina(tFilme **filmes, int nPagina, int qtdFilmes);
  * @param qtdFilmes Quantidade de filmes no vetor.
  **/
 void pesquisaFilmes(char *busca, tFilme **filmes, int qtdFilmes);
+
+
 #endif
 
