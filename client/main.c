@@ -1,6 +1,7 @@
 #include "../include/usuario.h"
 #include "../include/utils.h"
 
+// teste
 // TRATAR DO PROBLEMA NAS ASPAS NA LEITURA DO CSV
 int main(){
     tFilme **filmes;
