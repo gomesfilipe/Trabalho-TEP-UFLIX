@@ -125,7 +125,7 @@ void pesquisaFilmes(char *busca, tFilme **filmes, int qtdFilmes){
         }
         
         free(aux);
-    }
+    } 
 }
 
 void imprimeDescricao(tFilme *filme){ 

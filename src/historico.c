@@ -8,10 +8,30 @@
 struct historico{
     int *id; // vetor
     float *notas; // vetor
-    tData *data; // vetor
+    tData **data; // vetor
     int qtd_filmes_atual;
     int qtd_filmes_max;
 };
+
+int contaFilmesNoHistoricoCSV(char *fileName){
+    char c;
+    int virgulas = 0;
+    FILE *f = fopen(fileName, "r");
+    if(f == NULL){
+        printf("Erro na abertura do arquivo!\n");
+        exit(1);
+    }
+    
+    while(c != '\n'){
+        fscanf(f, "%c", &c);
+        if(c == ','){
+            virgulas++;
+        }
+    }
+
+    fclose(f);
+    return (virgulas - 1) / 3;
+}
 
 tData* leData(){
     int dia, mes, ano;
@@ -24,15 +44,17 @@ tData* leData(){
 tHistorico* criaPrimeiroHistorico(){
     tHistorico *hist = (tHistorico*) malloc(sizeof(tHistorico));
     hist->notas = (float*) malloc(sizeof(float) * AUMENTO);
-    hist->data = criaData(); // criaData só aloca 1 espaço, tem q alocar 10
+    hist->data = (tData**) malloc(sizeof(tData*) * AUMENTO);
     hist->id = (int*) malloc(sizeof(int) * AUMENTO);
+    hist->qtd_filmes_atual = 0;
+    hist->qtd_filmes_max = AUMENTO;
 }
-
-//tem fazer funcao do primiero historico q n tem nada, nem data nem nota
+//NAO ESQUECER
 // Caso que o usuário já tem pelo menos 1 filme no histórico.
 //ja deixar as funcoes de leitura de int* notas, int* id aumentadas para evitar realloc
 //ja deixamos aumentado pra evitar realloc
-tHistorico* resgataHistorico(int qtd_filmes_atual, tData *data, int *notas, int* id){
+//dar free nos paramentros depois
+tHistorico* resgataHistorico(int qtd_filmes_atual, tData **data, int *notas, int *id){
     tHistorico *hist = (tHistorico*) malloc(sizeof(tHistorico));
     hist->qtd_filmes_atual = qtd_filmes_atual;
     hist->qtd_filmes_max = qtd_filmes_atual + AUMENTO;
@@ -43,17 +65,36 @@ tHistorico* resgataHistorico(int qtd_filmes_atual, tData *data, int *notas, int*
 }
 
 tHistorico* adicionaFilmeHistorico(tHistorico* hist, tFilme **filmes, int id, float nota, int dia, int mes, int ano){
-    hist->qtd_filmes_max = qtd_filmes_atual + AUMENTO;
+    //hist->qtd_filmes_max = qtd_filmes_atual + AUMENTO;
     
-    hist->data = criaData(dia, mes, ano);
+    //hist->data = criaData(dia, mes, ano);
     
 
 }
 
-ordenaHistoricoPorData(){
+void ordenaHistoricoPorData(){ 
 
 }
 
-ordenaHistoricoPorNota(){
+void ordenaHistoricoPorNota(){
 
 }
+
+// data, titulo, nota
+void imprimirHistorico(tHistorico *hist, tFilme **filmes){
+    printf("Meu historico:\n");
+    for(int i = 0; i < hist->qtd_filmes_atual; i++){
+        imprimeData(hist->data[i]);
+        printf(" - %s: ", filmes[hist->id[i] - 1]->titulo); // fazer funçao pra evitar o acesso direto 
+        if(hist->notas[i] < 0){
+            printf("Sem avaliacao\n");
+        
+        } else{
+            printf("%.1f\n", hist->notas[i]);
+        }
+    }
+}
+
+   
+
+
