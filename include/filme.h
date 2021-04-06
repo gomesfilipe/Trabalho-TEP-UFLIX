@@ -71,6 +71,12 @@ void imprimePagina(tFilme **filmes, int nPagina, int qtdFilmes);
  **/
 void pesquisaFilmes(char *busca, tFilme **filmes, int qtdFilmes);
 
+/**
+ * @brief Imprime o título de um filme com determinada id.
+ * @param filmes Vetor de ponteiro de filmes.
+ * @param id Id do filme a ser imprimido.
+ **/
+void imprimeTituloFilme(tFilme** filmes, int id);
 
 #endif
 

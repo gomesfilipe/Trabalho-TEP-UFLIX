@@ -139,5 +139,9 @@ void imprimeDescricao(tFilme *filme){
     printf("\n");
 }
 
+//id eh a posicao do filme no vetor, -1 eh pq o vetor comeca em zero
+void imprimeTituloFilme(tFilme** filmes, int id){
+    printf("%s\n", filmes[id - 1]->titulo);
+}
 
 

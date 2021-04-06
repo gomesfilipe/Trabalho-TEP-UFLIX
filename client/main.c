@@ -4,31 +4,19 @@
 int main(){
     tFilme **filmes;
     char *fileName = "./data/filmes-grande.csv";
-    //char *busca = (char*) malloc(sizeof(char) * 128 + 1);
-    //scanf("%[^\n]", busca);
-    char passar = 'x';
-    int nPagina = 1;
-    
     int qtdFilmes = contaLinhasCSV(fileName);
-
     filmes = leFilmes(fileName);
-    //so estamos testando aqui
-    // while(passar != '0'){ //pois 0 é comando de voltar para o menu
-    //     imprimePagina(filmes, nPagina, qtdFilmes);
-    //     //scanf("%c%c", &passar);
-    //     passar = getchar(); //leitura de passar
-    //     getchar(); //lendo o /n
-    //     if(passar == 'M'){ //ver Mais filmes, ir próxima página
-    //         nPagina++;
-    //         system("cls");
-    //     } else if(passar == 'm'){ //ver menos filmes, voltar página
-    //         nPagina--;
-    //         system("cls");
-    //     } else{
-            
-    //     }
-    // }    
-    imprimeTodosOsFilmes(filmes, contaLinhasCSV(fileName)); 
-
+    int counter;
+    //char *f = "./data/usuarios.csv"; 
+    //char *nome = "alan";
+    
+    // counter = contaFilmesNoHistoricoCSV(f, nome);
+    // printf("%d\n", counter);
+    int id = 1;
+    float nota = 7.3;
+    int dia = 5, mes = 4, ano = 2021;
+    tHistorico *hist = criaPrimeiroHistorico();
+    hist = adicionaFilmeHistorico(hist, id, nota, dia, mes, ano);
+    imprimirHistorico(hist, filmes);
     return 0;
 } 
