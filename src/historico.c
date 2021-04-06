@@ -69,7 +69,7 @@ tData* leData(){
     return data;
 }
 
-tHistorico* criaPrimeiroHistorico(){
+tHistorico* criaPrimeiroHistorico(){   //testamos ta ok
     tHistorico *hist = (tHistorico*) malloc(sizeof(tHistorico));
     hist->notas = (float*) malloc(sizeof(float) * AUMENTO);
     hist->data = (tData**) malloc(sizeof(tData*) * AUMENTO);
@@ -93,26 +93,28 @@ tHistorico* resgataHistorico(int qtd_filmes_atual, tData **data, float *notas, i
     return hist;
 }
 
-tHistorico* adicionaFilmeHistorico(tHistorico *hist, int id, float nota, int dia, int mes, int ano){
-    tData *dataAux = hist->data[hist->qtd_filmes_atual];
-    
-    if( hist->qtd_filmes_atual == hist->qtd_filmes_max){ //se precisa de mais espaco pra adicionar o filme
-        hist->id = (int*) realloc(hist->id, sizeof( int) * (hist->qtd_filmes_atual + AUMENTO) );
-        hist->notas = (float*) realloc ( hist->notas, sizeof(float) * (hist->qtd_filmes_atual + AUMENTO) ) ;
-        hist->data = (tData**) realloc (hist->data, sizeof(tData*) * (hist->qtd_filmes_atual + AUMENTO) ) ;
+tHistorico* adicionaFilmeHistorico(tHistorico *hist, int id, float nota, int dia, int mes, int ano){ 
+    if(hist->qtd_filmes_atual == hist->qtd_filmes_max){ //se precisar de mais espaco pra adicionar o filme
+        hist->id = (int*) realloc(hist->id, sizeof(int) * (hist->qtd_filmes_atual + AUMENTO));
+        hist->notas = (float*) realloc (hist->notas, sizeof(float) * (hist->qtd_filmes_atual + AUMENTO));
+        hist->data = (tData**) realloc (hist->data, sizeof(tData*) * (hist->qtd_filmes_atual + AUMENTO));
         hist->qtd_filmes_max += AUMENTO;     
     }
     
-    hist->id[ hist-> qtd_filmes_atual  ] = id; 
-    hist->notas[ hist-> qtd_filmes_atual ] = nota;
-    hist->qtd_filmes_atual++;
-    hist-> data[hist-> qtd_filmes_atual] = criaData(dia, mes, ano); // TALVEZ DÊ PROBLEMA  
+    tData **dataAux = hist->data;
     
+    hist->id[hist->qtd_filmes_atual] = id; 
+    hist->notas[hist->qtd_filmes_atual] = nota;  
+    hist->data[hist->qtd_filmes_atual] = criaData(dia, mes, ano); // TALVEZ DÊ PROBLEMA 
+    hist->qtd_filmes_atual++;  
+    
+    for(int i = 0; i < hist->qtd_filmes_atual; i++){
+        free(dataAux[i]);
+    }
+
     free(dataAux);
     return hist;
 }
-
-
 
 void ordenaHistoricoPorData(tHistorico *hist){ 
 
@@ -122,7 +124,7 @@ void ordenaHistoricoPorNota(tHistorico *hist){
 
 }
 
-void imprimirHistorico(tHistorico *hist, tFilme **filmes){
+void imprimirHistorico(tHistorico *hist, tFilme **filmes){   //testamos ta ok
     printf("Meu historico:\n");
     for(int i = 0; i < hist->qtd_filmes_atual; i++){
         imprimeData(hist->data[i]);
@@ -141,15 +143,17 @@ void imprimirHistorico(tHistorico *hist, tFilme **filmes){
 //Quando adiciona um filme no histórico, é preciso colocar a data e a nota do filme no arquivo csv para quando for resgatar o histórico as informações estarem salvas
 void imprimeHistoricoCSV(int id, float nota, int dia, int mes, int ano, char *fileName, char *login){
     char *nomeAux = (char*) malloc(sizeof(char) * 100);
-    FILE *f = fopen(fileName, "w");
+    FILE *f = fopen(fileName, "r+");
     if(f == NULL){
         printf("Erro na abertura do arquivo!\n");
         exit(1);
     }
-
+    fscanf(f, "%[^,]", nomeAux);
+    
     do{
         fscanf(f, "%[^,]", nomeAux);
-        if(strcmp(nomeAux, login) == 0){        
+        if(strcmp(nomeAux, login) == 0){ 
+            // FILE *f = fopen(fileName, "w");
             fscanf(f, "%*[^\n]");
             fprintf(f, ",%d,%.1f,%02d/%02d/%04d", id, nota, dia, mes, ano);     
             break;

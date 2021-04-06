@@ -73,4 +73,6 @@ void ordenaHistoricoPorData(tHistorico *hist);
  **/
 void ordenaHistoricoPorNota(tHistorico *hist);
 
+void imprimeHistoricoCSV(int id, float nota, int dia, int mes, int ano, char *fileName, char *login);
+
 #endif
