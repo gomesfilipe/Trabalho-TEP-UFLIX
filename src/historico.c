@@ -101,30 +101,62 @@ tHistorico* adicionaFilmeHistorico(tHistorico *hist, int id, float nota, int dia
         hist->qtd_filmes_max += AUMENTO;     
     }
     
-    tData **dataAux = hist->data;
-    
     hist->id[hist->qtd_filmes_atual] = id; 
     hist->notas[hist->qtd_filmes_atual] = nota;  
-    hist->data[hist->qtd_filmes_atual] = criaData(dia, mes, ano); // TALVEZ DÊ PROBLEMA 
-    hist->qtd_filmes_atual++;  
-    
-    for(int i = 0; i < hist->qtd_filmes_atual; i++){
-        free(dataAux[i]);
-    }
+    hist->data[hist->qtd_filmes_atual] = criaData(dia, mes, ano);
+    hist->qtd_filmes_atual++;     
 
-    free(dataAux);
     return hist;
 }
 
 void ordenaHistoricoPorData(tHistorico *hist){ 
+    int idAux;
+    float notaAux;
+    tData *dataAux;
+    for(int i = 0; i < hist->qtd_filmes_atual; i++){
+        for(int j = i+ 1; j < hist->qtd_filmes_atual; j++){
+            if(datacmp(hist->data[i], hist->data[j]) == -1){ //ou seja, quando a data na posicao i é menor que na j
+                notaAux = hist->notas[j];
+                hist->notas[j] = hist->notas[i];
+                hist->notas[i] = notaAux;
 
+                idAux = hist->id[j];
+                hist->id[j] = hist->id[i];
+                hist->id[i] = idAux;
+
+                dataAux = hist->data[j];
+                hist->data[j] = hist->data[i];
+                hist->data[i] = dataAux;  
+            }
+        }
+    }
 }
 
-void ordenaHistoricoPorNota(tHistorico *hist){
+void ordenaHistoricoPorNota(tHistorico *hist){  
+    int idAux;
+    float notaAux;
+    tData *dataAux;
 
+    for(int i = 0; i < hist->qtd_filmes_atual; i++){
+        for(int j = i+1; j < hist->qtd_filmes_atual; j++){
+            if(hist->notas[i] < hist->notas[j]){
+                notaAux = hist->notas[j];
+                hist->notas[j] = hist->notas[i];
+                hist->notas[i] = notaAux;
+
+                idAux = hist->id[j];
+                hist->id[j] = hist->id[i];
+                hist->id[i] = idAux;
+                
+                dataAux = hist->data[j];
+                hist->data[j] = hist->data[i];
+                hist->data[i] = dataAux; 
+            }
+        }
+    }
 }
 
-void imprimirHistorico(tHistorico *hist, tFilme **filmes){   //testamos ta ok
+void imprimirHistorico(tHistorico *hist, tFilme **filmes){
     printf("Meu historico:\n");
     for(int i = 0; i < hist->qtd_filmes_atual; i++){
         imprimeData(hist->data[i]);
@@ -140,14 +172,14 @@ void imprimirHistorico(tHistorico *hist, tFilme **filmes){   //testamos ta ok
     }
 }
 
-//Quando adiciona um filme no histórico, é preciso colocar a data e a nota do filme no arquivo csv para quando for resgatar o histórico as informações estarem salvas
 void imprimeHistoricoCSV(int id, float nota, int dia, int mes, int ano, char *fileName, char *login){
     char *nomeAux = (char*) malloc(sizeof(char) * 100);
-    FILE *f = fopen(fileName, "r+");
+    FILE *f = fopen(fileName, "a");
     if(f == NULL){
         printf("Erro na abertura do arquivo!\n");
         exit(1);
     }
+    
     fscanf(f, "%[^,]", nomeAux);
     
     do{
@@ -166,7 +198,4 @@ void imprimeHistoricoCSV(int id, float nota, int dia, int mes, int ano, char *fi
     
     fclose(f);
 }
-
-   
-
-
+  

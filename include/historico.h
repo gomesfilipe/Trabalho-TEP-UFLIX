@@ -73,6 +73,18 @@ void ordenaHistoricoPorData(tHistorico *hist);
  **/
 void ordenaHistoricoPorNota(tHistorico *hist);
 
+/**
+ * @brief Escreve os dados referentes ao histórico do usuário no arquivo CSV.
+ * Essa função permite o armazenamento dos dados quando o programa cliente é encerrado.
+ * @param id Id do filme assistido.
+ * @param nota Avaliação do usuário.
+ * @param dia Dia que assistiu o filme.
+ * @param mes Mês que assistiu o filme.
+ * @param ano Ano que assistiu o filme.
+ * @param fileName Caminho para o arquivo CSV que contém os dados dos usuários.
+ * @param login Login do usuário.
+ * @return Função sem retorno, pois somente escreve no arquivo CSV.
+ **/
 void imprimeHistoricoCSV(int id, float nota, int dia, int mes, int ano, char *fileName, char *login);
 
 #endif

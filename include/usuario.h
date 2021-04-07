@@ -5,6 +5,6 @@
 
 typedef struct usuario tUsuario;
 
-
+void cadastraUsuario(char *login, char *senha, char *confirmaSenha, char *fileName);
 
 #endif
