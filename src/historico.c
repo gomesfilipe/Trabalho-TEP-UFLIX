@@ -16,49 +16,25 @@ struct historico{
 
 //conta filmes no histórico de um usuário
 int contaFilmesNoHistoricoCSV(char *fileName, char *login){
-    char *nomeAux = (char*) malloc(sizeof(char) * 100);
-    char c = 'x';
-    int virgulas = 0;
+    char *loginAux = (char*) malloc(sizeof(char) * 100);
+    int counter = 0;
     FILE *f = fopen(fileName, "r");
     if(f == NULL){
         printf("Erro na abertura do arquivo!\n");
         exit(1);
     }
 
-    // for(int i=0; i< contaLinhasCSV(fileName); i++){
-    //     fscanf(f,"%[^,]", nomeAux);
-    //     while(c != '\n'){
-    //         fscanf(f, "%c", &c);
-    //         if(c == ','){
-    //             virgulas++;
-    //         }
-    //     }  
-    //     printf("[%d]\n",(virgulas - 1) / 3);
-    //     virgulas=0;
-    //     c= 'x'; //resetando c
-    // }
-   
-
-    do{
-        fscanf(f, "%[^,]", nomeAux);
-        if(strcmp(nomeAux, login) == 0){        
-            while(c != '\n'){
-                fscanf(f, "%c", &c);
-                if(c == ','){
-                    virgulas++;
-                }
-            }               
-            break;
-            
-        }else{
-            fscanf(f, "%*[^\n]\n"); //ignora o resto da linha
+    for(int i = 0; i < contaLinhasCSV(fileName); i++){
+        fscanf(f, "%[^,]", loginAux);
+        fscanf(f, "%*[^\n]\n");
+        if(strcmp(loginAux, login) == 0){
+            counter++;
         }
-        
-    }while(strcmp(nomeAux, login) != 0);
+    }
 
-    free(nomeAux);
     fclose(f);
-    return (virgulas - 1) / 3;
+    free(loginAux);
+    return counter;
 }
 
 tData* leData(){
@@ -83,18 +59,58 @@ tHistorico* criaPrimeiroHistorico(){   //testamos ta ok
 //ja deixar as funcoes de leitura de int* notas, int* id aumentadas para evitar realloc
 //ja deixamos aumentado pra evitar realloc
 //dar free nos paramentros depois
-tHistorico* resgataHistorico(int qtd_filmes_atual, tData **data, float *notas, int *id){
-    tHistorico *hist = (tHistorico*) malloc(sizeof(tHistorico));
+tHistorico* resgataHistorico(char *login, char *fileName){
+    int qtd_filmes_atual = contaFilmesNoHistoricoCSV(fileName, login);
+
+    tHistorico *hist;
+    
+    if(qtd_filmes_atual == 0){
+        hist = criaPrimeiroHistorico();
+        return hist;
+    }
+
+    hist = (tHistorico*) malloc(sizeof(tHistorico));
     hist->qtd_filmes_atual = qtd_filmes_atual;
     hist->qtd_filmes_max = qtd_filmes_atual + AUMENTO;
-    hist->data = data;
-    hist->notas = notas;
-    hist->id = id; 
+    hist->data = (tData**) malloc(sizeof(tData*) * (qtd_filmes_atual + AUMENTO));
+    hist->notas = (float*) malloc(sizeof(float) * (qtd_filmes_atual + AUMENTO));
+    hist->id = (int*) malloc(sizeof(int) * (qtd_filmes_atual + AUMENTO)); 
+    
+    int diaAux, mesAux, anoAux;
+    char *loginAux= (char*) malloc(sizeof(char) * 100);
+    
+    FILE *f = fopen(fileName, "r");
+    if(f == NULL){
+        printf("Erro na abertura do arquivo.");
+        exit(1);
+    }
+    
+    int posHist = 0;
+
+    for(int i=0; i < contaLinhasCSV(fileName); i++){
+        fscanf(f, "%[^,],", loginAux);
+        if(strcmp(login, loginAux) == 0){  //se forem iguais
+            fscanf(f, "%d,", &hist->id[posHist]);
+            fscanf(f, "%f,", &hist->notas[posHist]);
+            fscanf(f, "%d/%d/%d\n", &diaAux, &mesAux, &anoAux);
+            hist->data[posHist] = criaData(diaAux, mesAux, anoAux);
+            
+            posHist++;
+        
+        } else{
+            fscanf(f, "%*[^\n]\n");
+        }
+    }
+        
+    fclose(f);
+    free(loginAux);
+    
     return hist;
 }
 
-tHistorico* adicionaFilmeHistorico(tHistorico *hist, int id, float nota, int dia, int mes, int ano){ 
+tHistorico* adicionaFilmeHistorico(tHistorico *hist, int id, float nota, int dia, int mes, int ano, char *fileName, char * login){ 
     if(hist->qtd_filmes_atual == hist->qtd_filmes_max){ //se precisar de mais espaco pra adicionar o filme
+        printf("\nrealocou!\n");
         hist->id = (int*) realloc(hist->id, sizeof(int) * (hist->qtd_filmes_atual + AUMENTO));
         hist->notas = (float*) realloc (hist->notas, sizeof(float) * (hist->qtd_filmes_atual + AUMENTO));
         hist->data = (tData**) realloc (hist->data, sizeof(tData*) * (hist->qtd_filmes_atual + AUMENTO));
@@ -104,7 +120,9 @@ tHistorico* adicionaFilmeHistorico(tHistorico *hist, int id, float nota, int dia
     hist->id[hist->qtd_filmes_atual] = id; 
     hist->notas[hist->qtd_filmes_atual] = nota;  
     hist->data[hist->qtd_filmes_atual] = criaData(dia, mes, ano);
-    hist->qtd_filmes_atual++;     
+    hist->qtd_filmes_atual++;
+  
+    imprimeHistoricoCSV(id, nota, dia, mes, ano, fileName, login);
 
     return hist;
 }
@@ -174,28 +192,14 @@ void imprimirHistorico(tHistorico *hist, tFilme **filmes){
 
 void imprimeHistoricoCSV(int id, float nota, int dia, int mes, int ano, char *fileName, char *login){
     char *nomeAux = (char*) malloc(sizeof(char) * 100);
-    FILE *f = fopen(fileName, "a");
+    FILE *f = fopen(fileName, "a"); //modo append
     if(f == NULL){
         printf("Erro na abertura do arquivo!\n");
         exit(1);
     }
     
-    fscanf(f, "%[^,]", nomeAux);
-    
-    do{
-        fscanf(f, "%[^,]", nomeAux);
-        if(strcmp(nomeAux, login) == 0){ 
-            // FILE *f = fopen(fileName, "w");
-            fscanf(f, "%*[^\n]");
-            fprintf(f, ",%d,%.1f,%02d/%02d/%04d", id, nota, dia, mes, ano);     
-            break;
-            
-        }else{
-            fscanf(f, "%*[^\n]\n"); //ignora o resto da linha
-        }
-        
-    }while(strcmp(nomeAux, login) != 0);
+    fprintf(f, "%s,%d,%.1f,%02d/%02d/%04d\n", login, id, nota, dia, mes, ano);
     
     fclose(f);
+    free(nomeAux);
 }
-  

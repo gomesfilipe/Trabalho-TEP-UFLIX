@@ -8,15 +8,17 @@ struct usuario{
     int ativo; // 1 ta ativo e 0 inativo
 };
 
+//temso que destruit o historico e tratatr usuarios ativos e inativos, fazer tratamento disso
+
 int efetuaLogin(char* login, char* senha, char* fileName){
     char *loginAux = (char*) malloc(sizeof(char) * 100);
     char *senhaAux = (char*) malloc(sizeof(char) * 100);
 
-   FILE *f = fopen(fileName, "r");
+    FILE *f = fopen(fileName, "r");
     if(f== NULL){
-    printf("Erro na abertura do arquivo!\n");
-    exit(1);
-    }
+        printf("Erro na abertura do arquivo!\n");
+        exit(1);
+    } 
     
     for(int i=0; i < contaLinhasCSV(fileName); i++){
         fscanf(f, "%[^,],%[^\n]\n" , loginAux, senhaAux); 
@@ -31,6 +33,7 @@ int efetuaLogin(char* login, char* senha, char* fileName){
             }
         }  
     } 
+    
     printf("Usuário não cadastrado!\n");
 
     free(loginAux);
@@ -102,24 +105,21 @@ tUsuario* criaUsuario(char *login, char *senha){
     tUsuario *usuario = (tUsuario*) malloc(sizeof(tUsuario));
     usuario->login = login;
     usuario->senha = senha;
-    int qtdFilmesAtual = contaFilmesNoHistoricoCSV();
-    if(qtdFilmesAtual == 0){ //consideramos aqui que conseguimos escrever o filme na frente do login e da sala
-        usuario->hist = criaPrimeiroHistorico();
-    } else{
+    //!int qtdFilmesAtual = contaFilmesNoHistoricoCSV();
+    //!if(qtdFilmesAtual == 0){ //consideramos aqui que conseguimos escrever o filme na frente do login e da sala
+        //!usuario->hist = criaPrimeiroHistorico();
+    //!} else{
         // fazer alguma coisa que leia o csv de historico e capture os dados que sao os parametros da funcao abaixo 
-        usuario->hist = resgataHistorico(qtdFilmesAtual, data, nota);
-    }
+        //!usuario->hist = resgataHistorico(qtdFilmesAtual, data, nota);
+    //!}
     // chamar função de criar historico ou resgatahistorico
     usuario->ativo = 1;
     return usuario;
 }
-char *login; // vetor de caracteres
-    char *senha; // vetor de caracteres
-    tHistorico *hist; // único elemento
-    int ativo; // 1 ta ativo e 0 inativo
-tUsuario* destroiUsuario(tUsuario usuario){
+
+// tUsuario* destroiUsuario(tUsuario usuario){
     
-}
+// }
 
 // char *login; // vetor de caracteres
 // char *senha; // vetor de caracteres

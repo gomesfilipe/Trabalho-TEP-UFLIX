@@ -15,4 +15,4 @@ int contaLinhasCSV(char *fileName);
  **/
 char* converteMinuscula(char *string);
 
-#endif
+#endif  

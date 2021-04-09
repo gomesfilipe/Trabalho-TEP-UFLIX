@@ -46,6 +46,6 @@ tUsuario* criaUsuario(char *login, char *senha);
  * @brief Libera memória de um ponteiro de usuário.
  * @param usuario Usuario que será liberado da memória.
  **/
-tUsuario* destroiUsuario(tUsuario *usuario);
+//tUsuario* destroiUsuario(tUsuario *usuario);
 
 #endif

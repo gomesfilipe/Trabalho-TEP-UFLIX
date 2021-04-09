@@ -16,10 +16,11 @@ tData* leData();
 
 /**
  * @brief Conta quantos filmes têm no histórico de um determinado usuário com base em seus dados presentes no arquivo CSV.
- * @param fileName É o caminho do arquivo CSV que possui os filmes no historico
- * @return Número de filmes que o usuário possui no histórico
+ * @param fileName É o caminho do arquivo CSV de históricos.
+ * @param login Login do usuário.
+ * @return Número de filmes que o usuário possui no histórico.
 **/
-int contaFilmesNoHistoricoCSV(char *fileName, char *nomeUsuario);
+int contaFilmesNoHistoricoCSV(char *fileName, char *login);
 
 /**
  * @brief Aloca memória para o histórico de um usuário e seus campos, caso ele ainda não tenha assistido nenhum filme.
@@ -29,25 +30,30 @@ int contaFilmesNoHistoricoCSV(char *fileName, char *nomeUsuario);
 tHistorico* criaPrimeiroHistorico();
 
 /**
- * @brief Aloca memória para o histórico de um usuário e seus campos, caso ele já tenha assistido algum filme.
- * Ela difere da função "criaPrimeiroHistorico" pois ela aloca memória para os filmes que o usuário já assistiu
- * e reserva um pouco mais para filmes que ele assistirá posteriormente.
- * @param qtd_filmes_atual Quantidade de filmes assistida.
- * @param data Vetor de ponteiros de tData com as datas de quando o usuário assistiu os filmes. 
- * @param notas Vetor de avaliações feitas aos filmes que o usuário assistiu.
- * @param id Vetor de ids dos filmes que o usuário assistiu.
+ * @brief Aloca memória para o histórico de um usuário e seus campos.
+ * Ela aloca memória para a quantidade de filmes que o usuário já tinha assistido antes e para mais alguns filmes que ele ainda irá assistir.
+ * @param login Login do usuário.
+ * @param fileName Caminho para o arquivo CSV de históricos.
  * @return tHistorico com memória alocada para armazenar os dados do histórico dos filmes já assistidos e 
  * os dados dos filmes que serão assistidos posteriormente.
  **/
-tHistorico* resgataHistorico(int qtd_filmes_atual, tData **data, float *notas, int *id);
+tHistorico* resgataHistorico(char *login, char *fileName);
 
 
 /**
- * @brief Acrescenta m
- * @param fileName É o caminho do arquivo CSV que possui os filmes no historico
- * @return Numero de filmes que possui no histórico
+ * @brief Adiciona um filme no histórico de um usuário quando ele assiste a algum filme.
+ * Esta função escreve no arquivo CSV de usuários para armazenamento dos dados e também realoca a memória caso seja necesário.
+ * @param hist Histórico do usuário.
+ * @param id Id do filme assistido pelo usuário.
+ * @param nota Avaliação do usuário.
+ * @param dia Dia que o usuário assistiu o filme.
+ * @param mes Mês que o usuário assistiu o filme.
+ * @param ano Ano que o usário assistiu o filme.
+ * @param fileName É o caminho do arquivo CSV que possui os filmes no histórico.
+ * @param login É o login do usuário que está no arquivo historico.csv
+ * @return Histórico do usuário atualizado.
 **/
-tHistorico* adicionaFilmeHistorico(tHistorico* hist, int id, float nota, int dia, int mes, int ano);
+tHistorico* adicionaFilmeHistorico(tHistorico* hist, int id, float nota, int dia, int mes, int ano, char *fileName, char *login);
 
 /**
  * @brief Imprime o histórico de um usuário, com todos filme que assistiu, a respectiva nota e data de cada filme. A data se refere ao dia que o usuário assistiu o filme.
