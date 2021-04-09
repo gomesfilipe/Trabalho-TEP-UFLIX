@@ -144,4 +144,18 @@ void imprimeTituloFilme(tFilme** filmes, int id){
     printf("%s", filmes[id - 1]->titulo);
 }
 
+void destroiFilme(tFilme *filme){
+    free(filme->titulo);
+    free(filme->descricao);
+    free(filme);
+}
 
+void destroiVetorDeFilmes(tFilme **filmes, char *fileName){
+    for(int i; i < contaLinhasCSV(fileName); i++){
+        destroiFilme(filmes[i]);
+    }
+    free(filmes);
+}
+
+
+  

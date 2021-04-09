@@ -12,9 +12,9 @@ typedef struct usuario tUsuario;
  * @param senha Senha do usuário.
  * @param confirmaSenha String para verificação se esta e o parâmetro anterior são iguais.
  * @param fileName Caminho para o arquivo csv de usuários.
- * @return Função sem retorno.
+ * @return 1 caso o cadastro seja válido, 0 caso seja inválido.
  **/
-void cadastraUsuario(char *login, char *senha, char *confirmaSenha, char *fileName);
+int cadastraUsuario(char *login, char *senha, char *confirmaSenha, char *fileName);
 
 /**
  * @brief Efetua o login de um usuário para acesso ao UFLIX.
@@ -37,15 +37,15 @@ tUsuario* inativarConta(tUsuario *usuario);
  * @brief Aloca memória para um ponteiro de usuário e seus campos, e os inicializa.
  * @param login Login do usuário.
  * @param senha Senha do usuário.
- * @param hist Histórico do usuário.
+ * @param fileName Caminho para o arquivo CSV de históricos.
  * @return Ponteiro de usuário com memória alocada e inicializado.
  **/
-tUsuario* criaUsuario(char *login, char *senha);
+tUsuario* criaUsuario(char *login, char *senha, char *fileName);
 
 /**
  * @brief Libera memória de um ponteiro de usuário.
  * @param usuario Usuario que será liberado da memória.
  **/
-//tUsuario* destroiUsuario(tUsuario *usuario);
+void destroiUsuario(tUsuario *usuario);
 
 #endif

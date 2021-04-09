@@ -93,4 +93,11 @@ void ordenaHistoricoPorNota(tHistorico *hist);
  **/
 void imprimeHistoricoCSV(int id, float nota, int dia, int mes, int ano, char *fileName, char *login);
 
+/**
+ * @brief Libera da memória um ponteiro de tHistorico.
+ * @param hist É o histórico de um usuário.
+ * @return Função sem retorno.
+ **/
+void destroiHistorico(tHistorico *hist);
+
 #endif

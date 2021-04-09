@@ -5,6 +5,7 @@ int main(){
     tFilme **filmes;
     char *fileName1 = "./data/filmes-grande.csv";
     char *fileName = "./data/historico.csv";
+    char *fileName2 = "./data/usuarios.csv";
     // int qtdFilmes = contaLinhasCSV(fileName);
     filmes = leFilmes(fileName1);
     //int counter = 0;
@@ -66,28 +67,40 @@ int main(){
     //float nota= 10;
     //imprimeHistoricoCSV(id, nota, dia, mes, ano, fileName, "elaine");
 
-    tHistorico* hist;
-    char *login = "elaine";
-    hist= resgataHistorico(login, fileName);
-    imprimirHistorico(hist, filmes);
-    printf("\n");
+    // tHistorico* hist;
+    // char *login = "elaine";
+    //hist= resgataHistorico(login, fileName);
+    //imprimirHistorico(hist, filmes);
+
     
-    hist = adicionaFilmeHistorico(hist, 1, 5.2, 1, 2, 2000, fileName, login);
-    hist = adicionaFilmeHistorico(hist, 3, 3.1, 3, 2, 2000, fileName, login);
-    hist = adicionaFilmeHistorico(hist, 2, 6.8, 2, 2, 2000, fileName, login);
-    hist = adicionaFilmeHistorico(hist, 4, 1.4, 4, 2, 2000, fileName, login);
-    hist = adicionaFilmeHistorico(hist, 9, 8.6, 9, 2, 2000, fileName, login);
-    hist = adicionaFilmeHistorico(hist, 1, 5.2, 1, 2, 2000, fileName, login); //realoc aqui
-    hist = adicionaFilmeHistorico(hist, 5, 7.3, 5, 2, 2000, fileName, login);
-    hist = adicionaFilmeHistorico(hist, 3, 3.1, 3, 2, 2000, fileName, login);
-    hist = adicionaFilmeHistorico(hist, 2, 6.8, 2, 2, 2000, fileName, login);
-    hist = adicionaFilmeHistorico(hist, 4, 1.4, 4, 2, 2000, fileName, login);
-    hist = adicionaFilmeHistorico(hist, 9, 8.6, 9, 2, 2000, fileName, login);
+    // hist = adicionaFilmeHistorico(hist, 1, 5.2, 1, 2, 2000, fileName, login);
+    // hist = adicionaFilmeHistorico(hist, 3, 3.1, 3, 2, 2000, fileName, login);
+    // hist = adicionaFilmeHistorico(hist, 2, 6.8, 2, 2, 2000, fileName, login);
+    // hist = adicionaFilmeHistorico(hist, 4, 1.4, 4, 2, 2000, fileName, login);
+    // hist = adicionaFilmeHistorico(hist, 9, 8.6, 9, 2, 2000, fileName, login);
+    // hist = adicionaFilmeHistorico(hist, 1, 5.2, 1, 2, 2000, fileName, login); //realoc aqui
+    // hist = adicionaFilmeHistorico(hist, 5, 7.3, 5, 2, 2000, fileName, login);
+    // hist = adicionaFilmeHistorico(hist, 3, 3.1, 3, 2, 2000, fileName, login);
+    // hist = adicionaFilmeHistorico(hist, 2, 6.8, 2, 2, 2000, fileName, login);
+    // hist = adicionaFilmeHistorico(hist, 4, 1.4, 4, 2, 2000, fileName, login);
     // hist = adicionaFilmeHistorico(hist, 9, 8.6, 9, 2, 2000, fileName, login);
     // hist = adicionaFilmeHistorico(hist, 9, 8.6, 9, 2, 2000, fileName, login);
     // hist = adicionaFilmeHistorico(hist, 9, 8.6, 9, 2, 2000, fileName, login);
-   // hist = adicionaFilmeHistorico(hist, 9, 8.6, 9, 2, 2000, fileName, login);
-    
-    imprimirHistorico(hist, filmes);
+    // hist = adicionaFilmeHistorico(hist, 9, 8.6, 9, 2, 2000, fileName, login);
+    // hist = adicionaFilmeHistorico(hist, 9, 8.6, 9, 2, 2000, fileName, login);
+    //imprimirHistorico(hist, filmes);
+   
+
+    // char *login = "pedro";
+    // char *senha = "123";
+   
+    // int aux = efetuaLogin(login, senha, fileName2);
+
+    char *login = "carlosa";
+    char *senha = "kiko123";
+    char *confirmaSenha = "kiko123";
+
+    cadastraUsuario(login, senha, confirmaSenha, fileName2);
+
     return 0;
 } 

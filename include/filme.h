@@ -79,5 +79,20 @@ void pesquisaFilmes(char *busca, tFilme **filmes, int qtdFilmes);
  **/
 void imprimeTituloFilme(tFilme** filmes, int id);
 
+/**
+ * @brief Libera da memória um ponteiro de tFilme.
+ * @param filme Filme que será desalocado da memória.
+ * @return Função sem retorno.
+ **/
+void destroiFilme(tFilme *filme);
+
+/**
+ * @brief Libera da memória um vetor de ponteiros de tFilme.
+ * @param fileName É o caminho do arquivo filmes CSV.
+ * @param filmes É o vetor de que armazena todos os filmes do arquivo CSV.
+ * @return Função sem retorno.
+ **/
+void destroiVetorDeFilmes(tFilme **filmes, char *fileName);
+
 #endif
 

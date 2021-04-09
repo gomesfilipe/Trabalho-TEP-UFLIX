@@ -22,78 +22,86 @@ int efetuaLogin(char* login, char* senha, char* fileName){
     
     for(int i=0; i < contaLinhasCSV(fileName); i++){
         fscanf(f, "%[^,],%[^\n]\n" , loginAux, senhaAux); 
-        fscanf(f, "%*[^,]" );
-        if(strcmp(login, loginAux)== 0){ //login existe
-            if(strcmp(senha, senhaAux )== 0){
-               return 1; //vai para o menu pricipal, fazemos isso na main
-            }
-            else{
+        if(strcmp(login, loginAux) == 0){ //login existe
+            if(strcmp(senha, senhaAux) == 0){
+                free(loginAux);
+                free(senhaAux);
+                printf("Login efetuado com sucesso!\n");
+                return 1; //vai para o menu pricipal, fazemos isso na main
+            
+            } else{
                 printf("Senha incorreta!\n");
+                free(loginAux);
+                free(senhaAux);
                 return 0;
             }
         }  
     } 
     
-    printf("Usuário não cadastrado!\n");
-
+    printf("Usuario nao cadastrado!\n");
     free(loginAux);
     free(senhaAux);
+    return 0;
 }
 
 //se tem uma conta inativa, o cadastro pode ter o mesmo uusario essa conta, acrescentar isso NAO ESQUECER
-//cadastra um usuario por vez
-void cadastraUsuario(char *login, char *senha, char *confirmaSenha, char *fileName){
-    int encerra = 0; //Essa variavel é setada quando encontramos alguma condição que impede a continuação do cadastro. 
+
+//retonrar uma string, a string vai ser a mensagem q a gnt quer. resolve o "problema" switch e outros
+int cadastraUsuario(char *login, char *senha, char *confirmaSenha, char *fileName){
     char *loginAux = (char*) malloc(sizeof(char) * 100);
-    
+
     for(int i = 0; i < strlen(login); i++){ 
         if(!isalnum(login[i])){ // Verificando se login é alfanumérico
-            printf("Login deve ser alfanumerico!\n");  
-            encerra = 1;
-            break;
+            printf("Login fora do padrao.\n");  
+            free(loginAux);
+            return 0;
         }
-    }
-    if(encerra == 0){ 
-        for(int i = 0; i < strlen(senha); i++){ 
-            if(!isalnum(senha[i])){ // Verificando se senha é alfanumérica
-                printf("Senha deve ser alfanumerica!\n");  
-                encerra = 1;
-                break;
-            }
-        } 
-    }
-    FILE *f = fopen(fileName, "r+");
-    if(f == NULL){
-        printf("Erro na abertura do aruqivo!\n");
-        exit(1);
     }
     
-    if(encerra == 0){   
-        for(int i = 0; i < contaLinhasCSV(fileName); i++){
-            fscanf(f, "%[^,],", loginAux);
-            if(strcmp(login, loginAux) == 0){ //se forem iguais
-                printf("Login ja existente!\n");
-                encerra = 1;
-                break;
-                
-            } else{
-                fscanf(f, "%*[^\n]\n");
-                
-            }
-        } //se passou do for é porque é um login que ainda não tem, ou seja, um novo usuário
-    }
-
-    if(encerra == 0){
-        if(strcmp(senha, confirmaSenha) == 0){ //se senha e confirma senha forem iguais
-            fprintf(f, "%s,%s\n", login, senha);
-            printf("Cadastro feito com sucesso!\n");
-        } else{
-            printf("Senha errada!\n");
+    for(int i = 0; i < strlen(senha); i++){ 
+        if(!isalnum(senha[i])){ // Verificando se senha é alfanumérica
+            printf("Senha fora do padrao.\n");  
+            free(loginAux);
+            return 0;
         }
+    } 
+    
+    FILE *f = fopen(fileName, "r+");
+    if(f == NULL){
+        printf("Erro na abertura do arquivo!\n");
+        exit(1);
+    }
+      
+    for(int i = 0; i < contaLinhasCSV(fileName); i++){
+        fscanf(f, "%[^,]", loginAux);
+        if(strcmp(login, loginAux) == 0){ //se forem iguais
+            printf("Usuario ja cadastrado.\n");
+            free(loginAux);
+            fclose(f);
+            return 0;
+
+        } else{
+            fscanf(f, "%*[^\n]\n"); 
+        }
+    } //se passou do for é porque é um login que ainda não tem, ou seja, um novo usuário
+   
+    if(strcmp(senha, confirmaSenha) == 0){ //se senha e confirma senha forem iguais
+        fprintf(f, "%s,%s\n", login, senha);
+        //printf("Cadastro feito com sucesso!\n");
+        free(loginAux);
+        fclose(f);
+        return 1;
+        
+    } else{
+        printf("Senha incorreta.\n");
+        free(loginAux);
+        fclose(f);
+        return 0;
     }
 
     free(loginAux);
     fclose(f);
+    return 0;
 }
 
 tUsuario* inativarConta(tUsuario *usuario){
@@ -101,45 +109,25 @@ tUsuario* inativarConta(tUsuario *usuario){
     return usuario;
 }
 
-tUsuario* criaUsuario(char *login, char *senha){
+tUsuario* criaUsuario(char *login, char *senha, char *fileName){
     tUsuario *usuario = (tUsuario*) malloc(sizeof(tUsuario));
     usuario->login = login;
     usuario->senha = senha;
-    //!int qtdFilmesAtual = contaFilmesNoHistoricoCSV();
-    //!if(qtdFilmesAtual == 0){ //consideramos aqui que conseguimos escrever o filme na frente do login e da sala
-        //!usuario->hist = criaPrimeiroHistorico();
-    //!} else{
-        // fazer alguma coisa que leia o csv de historico e capture os dados que sao os parametros da funcao abaixo 
-        //!usuario->hist = resgataHistorico(qtdFilmesAtual, data, nota);
-    //!}
-    // chamar função de criar historico ou resgatahistorico
+    usuario->hist = resgataHistorico(login, fileName);
     usuario->ativo = 1;
     return usuario;
 }
 
-// tUsuario* destroiUsuario(tUsuario usuario){
-    
-// }
+void destroiUsuario(tUsuario *usuario){
+    free(usuario->login);
+    free(usuario->senha);
+    destroiHistorico(usuario->hist);
+    free(usuario);
+}
 
-// char *login; // vetor de caracteres
-// char *senha; // vetor de caracteres
-// tHistorico *hist; // único elemento
-// int ativo; // 1 ta ativo e 0 inativo
-
-
-//TODO cadastrar usuario 
-//TODO ativar e inativar conta ok
-//TODO sair da conta
-//TODO criar usuario ok
-//TODO criar funções para desalocar filme, historico, data e usuario
-
-
-
-//roteiro
-//csv
-//testar funcao resgata no filme ou no historico
 //usuario
 //makefile
-//main 
-//funcao em cada TAD para destruir a TAD
+//main
 //verbosidade
+//conta ativa e inativa
+//tirar os printf da funçoes q n sao void, deixar eles na main para n misturar aparte visual coma logica

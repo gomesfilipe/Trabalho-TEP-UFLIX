@@ -108,3 +108,7 @@ int datacmp(tData *d1, tData *d2){
 void imprimeData(tData *data){
     printf("%02d/%02d/%04d", data->dia, data->mes, data->ano);
 }
+
+void destroiData(tData *data){
+    free(data);
+}

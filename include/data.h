@@ -97,4 +97,11 @@ int datacmp(tData *d1, tData *d2);
  * */
 void imprimeData(tData *data);
 
+/**
+ * @brief Libera da memória um ponteiro de tData.
+ * @param data Ponteiro de data a ser destruído.
+ * @return Função sem retorno.
+ **/
+void destroiData(tData *data);
+
 #endif

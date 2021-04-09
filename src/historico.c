@@ -203,3 +203,13 @@ void imprimeHistoricoCSV(int id, float nota, int dia, int mes, int ano, char *fi
     fclose(f);
     free(nomeAux);
 }
+
+void destroiHistorico(tHistorico *hist){
+    for(int i = 0; i < hist->qtd_filmes_atual; i++){
+        destroiData(hist->data[i]);
+    }
+    
+    free(hist->id);
+    free(hist->notas);
+    free(hist);
+}
