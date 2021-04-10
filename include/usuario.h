@@ -2,6 +2,19 @@
 #define USUARIO_H
 
 #include "historico.h"
+#include "../include/utils.h"
+
+#define USUARIONAOCADASTRADO 0
+#define LOGINEFETUADO 1
+#define SENHAINCORRETA 2
+
+#define USUARIOJACADASTRADO 0
+#define CADASTROFEITO 1
+#define SENHAERRADA 2
+#define LOGINFORADOPADRAO 3
+#define SENHAFORADOPADRAO 4
+
+
 
 typedef struct usuario tUsuario;
 

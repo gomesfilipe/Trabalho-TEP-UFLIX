@@ -3,6 +3,7 @@
 
 #include "filme.h"
 #include "data.h"
+#include "utils.h"
 
 typedef struct historico tHistorico;
 

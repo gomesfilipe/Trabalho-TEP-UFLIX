@@ -1,8 +1,9 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <string.h>
+// #include <ctype.h>
+
 #include "../include/utils.h"
-#include <ctype.h>
 
 int contaLinhasCSV(char *fileName){
     FILE *f = fopen(fileName, "r");

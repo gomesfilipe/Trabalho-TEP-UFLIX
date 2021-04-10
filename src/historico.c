@@ -1,6 +1,6 @@
 #include "../include/historico.h"
-#include "../include/data.h"
-#include "../include/utils.h"
+//#include "../include/data.h"
+//#include "../include/utils.h"
 
 #define AUMENTO 10 // Aumento de espaços de memória quando necessário realocar os campos de histórico.
 

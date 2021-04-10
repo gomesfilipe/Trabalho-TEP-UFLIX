@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include "../include/utils.h"
 
 typedef struct filme tFilme;
 /**

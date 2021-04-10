@@ -1,6 +1,11 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
 /**
  *@brief Conta a quantidade de linhas preenchidas de um arquivo CSV.
  *@param fileName String com caminho até o arquivo CSV.

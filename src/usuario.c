@@ -1,5 +1,5 @@
 #include "../include/usuario.h"
-#include "../include/utils.h"
+//#include "../include/utils.h"
 
 struct usuario{
     char *login; // vetor de caracteres
@@ -24,24 +24,23 @@ int efetuaLogin(char* login, char* senha, char* fileName){
         fscanf(f, "%[^,],%[^\n]\n" , loginAux, senhaAux); 
         if(strcmp(login, loginAux) == 0){ //login existe
             if(strcmp(senha, senhaAux) == 0){
+                //printf("Login efetuado com sucesso!\n");
                 free(loginAux);
                 free(senhaAux);
-                printf("Login efetuado com sucesso!\n");
-                return 1; //vai para o menu pricipal, fazemos isso na main
-            
+                return LOGINEFETUADO; 
             } else{
-                printf("Senha incorreta!\n");
+                //printf("Senha incorreta!\n");
                 free(loginAux);
                 free(senhaAux);
-                return 0;
+                return SENHAINCORRETA; 
             }
         }  
     } 
     
-    printf("Usuario nao cadastrado!\n");
+    //printf("Usuario nao cadastrado!\n");
     free(loginAux);
     free(senhaAux);
-    return 0;
+    return USUARIONAOCADASTRADO;
 }
 
 //se tem uma conta inativa, o cadastro pode ter o mesmo uusario essa conta, acrescentar isso NAO ESQUECER
@@ -52,7 +51,8 @@ int cadastraUsuario(char *login, char *senha, char *confirmaSenha, char *fileNam
 
     for(int i = 0; i < strlen(login); i++){ 
         if(!isalnum(login[i])){ // Verificando se login é alfanumérico
-            printf("Login fora do padrao.\n");  
+        return LOGINFORADOPADRAO;
+           // printf("Login fora do padrao.\n");  
             free(loginAux);
             return 0;
         }
@@ -60,9 +60,9 @@ int cadastraUsuario(char *login, char *senha, char *confirmaSenha, char *fileNam
     
     for(int i = 0; i < strlen(senha); i++){ 
         if(!isalnum(senha[i])){ // Verificando se senha é alfanumérica
-            printf("Senha fora do padrao.\n");  
+            //printf("Senha fora do padrao.\n");  
             free(loginAux);
-            return 0;
+            return SENHAFORADOPADRAO;
         }
     } 
     
@@ -75,10 +75,10 @@ int cadastraUsuario(char *login, char *senha, char *confirmaSenha, char *fileNam
     for(int i = 0; i < contaLinhasCSV(fileName); i++){
         fscanf(f, "%[^,]", loginAux);
         if(strcmp(login, loginAux) == 0){ //se forem iguais
-            printf("Usuario ja cadastrado.\n");
+            //printf("Usuario ja cadastrado.\n");
             free(loginAux);
             fclose(f);
-            return 0;
+            return USUARIOJACADASTRADO;
 
         } else{
             fscanf(f, "%*[^\n]\n"); 
@@ -90,19 +90,20 @@ int cadastraUsuario(char *login, char *senha, char *confirmaSenha, char *fileNam
         //printf("Cadastro feito com sucesso!\n");
         free(loginAux);
         fclose(f);
-        return 1;
+        return CADASTROFEITO;
         
     } else{
-        printf("Senha incorreta.\n");
+        //printf("Senha incorreta.\n");
         free(loginAux);
         fclose(f);
-        return 0;
+        return SENHAERRADA;
     }
 
     free(loginAux);
     fclose(f);
-    return 0;
+    return 0; //poderíamos colocar qualquer return aqui, pois nunca chegará nesse ponto, então não teremos problema na hora de printar
 }
+
 
 tUsuario* inativarConta(tUsuario *usuario){
     usuario->ativo = 0; //inativando usuario
