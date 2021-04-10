@@ -48,4 +48,6 @@ tUsuario* criaUsuario(char *login, char *senha, char *fileName);
  **/
 void destroiUsuario(tUsuario *usuario);
 
+void imprimeUsuario(tUsuario *usuario, tFilme **filmes);
+
 #endif

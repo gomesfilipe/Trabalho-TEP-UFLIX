@@ -125,9 +125,16 @@ void destroiUsuario(tUsuario *usuario){
     free(usuario);
 }
 
+void imprimeUsuario(tUsuario *usuario, tFilme **filmes){
+    printf("%s\n", usuario->login);
+    printf("%s\n", usuario->senha);
+    imprimirHistorico(usuario->hist, filmes);
+    printf("\n%d\n", usuario->ativo);
+}
+
 //usuario
 //makefile
+//tirar os printf da funçoes q n sao void, deixar eles na main para n misturar aparte visual coma 
 //main
-//verbosidade
 //conta ativa e inativa
-//tirar os printf da funçoes q n sao void, deixar eles na main para n misturar aparte visual coma logica
+//verbosidade
