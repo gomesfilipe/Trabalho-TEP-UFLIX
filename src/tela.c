@@ -149,7 +149,7 @@ void telaInicial(char *fileNameUsuarios, char *fileNameHistorico, char *fileName
                     success = 1;
                     tUsuario *usuario = criaUsuario(login, senha, fileNameHistorico);
                     printf("Login efetuado com sucesso!\n");
-                    telaPrincipal(usuario);
+                    telaPrincipal(usuario, filmes, fileNameFilmes, fileNameHistorico);
 
                 } else if(loginUsuario == SENHAINCORRETA){
                     printf("Senha incorreta!\n");
@@ -208,6 +208,124 @@ void telaInicial(char *fileNameUsuarios, char *fileNameHistorico, char *fileName
     destroiVetorDeFilmes(filmes, fileNameFilmes);
 }
 
-void telaPrincipal(tUsuario* usuario){
-    printf("TELA INICIAL\n");
+   
+void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, char *fileNameHistorico){
+    printf("1. Listar filmes\n");
+    printf("2. Meu perfil\n");
+    printf("3. Procurar filme\n");
+    printf("4. Sair\n");
+
+    int botao, success = 0, botao3;
+    char *botao2 = (char*) malloc(sizeof(char) * 10);
+    int botao2int = atoi(botao2);
+    int qtdFilmes = contaLinhasCSV(fileNameFilmes);
+
+    scanf("%d", &botao);
+
+    while(success == 0){
+        switch(botao){
+            case LISTARFILMES:
+                int nPagina = 1;
+                int idMin = (nPagina - 1) * TAMPAG + 1;
+                int idMax = nPagina * TAMPAG; 
+                
+                while(1){
+                    imprimePagina(filmes, nPagina, qtdFilmes);
+
+                    scanf("%s", botao2);
+
+                    if(strcmp(botao2, 'M') == 0){ 
+                        nPagina++;
+                        idMin += TAMPAG;
+                        idMax += TAMPAG;
+                    
+                    } else if(strcmp(botao2, 'm') == 0){
+                        nPagina--;
+                        idMin -= TAMPAG;
+                        idMax -= TAMPAG;
+                    
+                    } else if(botao2int == 0){ // voltar
+                        break;
+                    
+                    } else if(botao2int < idMin || botao2int > idMax || botao2int < 0 || botao2int > qtdFilmes){
+                        printf("Botao invalido\n");
+                    
+                    } else{ // mostrar metadados do filme
+                        telaMetaDados(filmes, botao2int, usuario, fileNameHistorico);
+                    }
+
+                }
+                
+                break;
+            
+            case MEUPERFIL: 
+                
+                break;
+            
+            case PROCURARFILME: 
+                char *busca = (char*) malloc(sizeof(char) * 128);
+                scanf("%s", busca);
+                pesquisaFilmes(busca, filmes, qtdFilmes);
+                printf("\n1- Voltar\n");
+                printf("2- Assistir filme");
+
+                scanf("%d", &botao3);
+
+                if(botao3){
+
+                }
+                
+                break;
+            
+            case SAIDA: 
+                
+                break;
+            
+            default: 
+                printf("Botão invalido!\n");
+        }
+    }
 }
+
+void telaMetaDados(tFilme **filmes, int id, tUsuario *usuario, char* fileNameHistorico){
+    imprimeFilme(filmes[id - 1]);
+
+    printf("1- Assistir\n");
+    printf("2- Voltar\n");
+
+    int botao, encerra = 0;
+    scanf("%d", botao);
+
+    while(encerra == 0){
+        switch(botao){
+            case ASSISTIR: 
+                encerra = 1;
+                float nota;
+                tData *data;
+                scanf("%f", &nota);
+                while(1){
+                    data = leData(); //falta ver se a data eh valida
+                    if(dataValida(data)){
+                        break;
+                    } else{
+                        printf("Data invalida! Digite novamente\n");
+                    }
+                }
+
+                int dia = getDia(data);
+                int mes = getMes(data);
+                int ano = getAno(data);
+
+                adicionaFilmeHistorico( getHistorico(usuario), id, nota, dia, mes, ano, fileNameHistorico, getLogin(usuario));
+                break;
+            
+            case VOLTAR:
+                encerra = 1; //habilita para sair do while e voltar para a tela principal, pois vamos chamar essa funcao dentro da funcao da tela principal
+                break; 
+            
+            default: 
+                printf("Botao invalido\n");
+        }
+    }
+}
+

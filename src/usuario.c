@@ -133,6 +133,15 @@ void imprimeUsuario(tUsuario *usuario, tFilme **filmes){
     printf("\n%d\n", usuario->ativo);
 }
 
+tHistorico* getHistorico(tUsuario *usuario){
+    return usuario->hist;
+}
+
+
+char* getLogin(tUsuario* usuario){
+    return usuario->login;
+}
+
 //usuario
 //makefile
 //tirar os printf da funçoes q n sao void, deixar eles na main para n misturar aparte visual coma 

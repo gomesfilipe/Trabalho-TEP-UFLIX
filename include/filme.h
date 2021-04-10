@@ -7,6 +7,8 @@
 #include <ctype.h>
 #include "../include/utils.h"
 
+#define TAMPAG 10
+
 typedef struct filme tFilme;
 /**
  * @brief Aloca memória para um tFilme e inicializa seus campos.

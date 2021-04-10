@@ -1,7 +1,7 @@
 #include "../include/filme.h"
 //#include "../include/utils.h"
 
-#define TAMPAG 10
+//#define TAMPAG 10
 
 struct filme{
     char *titulo; // vetor de caracteres
@@ -104,6 +104,11 @@ void imprimePagina(tFilme **filmes, int nPagina, int qtdFilmes){
     if(nPagina > 0 && nPagina <= maxPaginas){
         int n1 = (nPagina - 1) * TAMPAG;
         int n2 = nPagina * TAMPAG - 1;  
+        
+        if(n2 >= qtdFilmes){
+            n2 = qtdFilmes - 1;
+        }
+        
         listarFilmes(filmes, n1, n2, qtdFilmes);
     
     } else{
@@ -112,7 +117,7 @@ void imprimePagina(tFilme **filmes, int nPagina, int qtdFilmes){
 }
 
 void pesquisaFilmes(char *busca, tFilme **filmes, int qtdFilmes){
-    int cont = 1;
+    //int cont = 1;
     converteMinuscula(busca); // Convertendo para minúsculo para não distinguir letras maiúsculas de minúsculas durante a busca.
     
     for(int i = 0; i < qtdFilmes; i++){
@@ -120,8 +125,9 @@ void pesquisaFilmes(char *busca, tFilme **filmes, int qtdFilmes){
         converteMinuscula(aux); // Convertendo para minúsculo para não distinguir letras maiúsculas de minúsculas durante a busca.
 
         if(strstr(aux, busca) != NULL){
-            printf("%d - %s\n", cont, filmes[i]->titulo);
-            cont++;
+            printf("%d - %s\n", filmes[i]->id, filmes[i]->titulo);
+            //printf("%d - %s\n", cont, filmes[i]->titulo);
+            //cont++;
         }
         
         free(aux);

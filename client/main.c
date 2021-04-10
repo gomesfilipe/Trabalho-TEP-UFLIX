@@ -26,7 +26,7 @@ int main(){
     //     }
     // }
 
-    telaInicial(fileNameUsuarios, fileNameHistorico);
+    telaInicial(fileNameUsuarios, fileNameHistorico, fileNameFilmes, filmes);
 
 
 
