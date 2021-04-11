@@ -28,4 +28,8 @@ char* converteMinuscula(char *str){
     }
     return str;
 }
+
+void limpaTela(){
+    system("cls");
+}
  

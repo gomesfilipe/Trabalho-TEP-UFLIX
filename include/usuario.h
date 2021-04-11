@@ -63,4 +63,9 @@ void destroiUsuario(tUsuario *usuario);
 
 void imprimeUsuario(tUsuario *usuario, tFilme **filmes);
 
+
+tHistorico* getHistorico(tUsuario* usuario);
+
+char* getLogin(tUsuario* usuario);
+
 #endif

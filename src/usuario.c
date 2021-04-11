@@ -142,9 +142,8 @@ char* getLogin(tUsuario* usuario){
     return usuario->login;
 }
 
-//usuario
+
+//documentar
 //makefile
-//tirar os printf da funçoes q n sao void, deixar eles na main para n misturar aparte visual coma 
-//main
-//conta ativa e inativa
 //verbosidade
+//conta ativa e inativa

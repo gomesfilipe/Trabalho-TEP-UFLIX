@@ -20,4 +20,10 @@ int contaLinhasCSV(char *fileName);
  **/
 char* converteMinuscula(char *string);
 
+/**
+ * @brief Limpa o terminal.
+ * @param -Função sem parâmetros.
+ * @return Função sem retorno.
+ **/
+void limpaTela();
 #endif  

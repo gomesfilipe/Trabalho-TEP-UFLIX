@@ -2,6 +2,7 @@
 #define TELA_H
 
 #include "usuario.h"
+#include "utils.h"
 
 #define LOGIN 1
 #define CADASTRO 2
@@ -15,14 +16,20 @@
 #define ASSISTIR 1
 #define VOLTAR 2
 
-// #define PAGINAINICIAL 0
-// #define PAGINAPRINCIPAL 1
-// #define ENCERRAR 2
+#define VOLTA 1
+
+#define HISTORICO 1
+#define EXCLUIR 2
+#define VOLT 3
 
 void telaInicial(char *fileNameUsuarios, char *fileNameHistorico, char *fileNameFilmes, tFilme **filmes);
 
-//void telaPrincipal(tUsuario* usuario, );
+void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, char *fileNameHistorico);
 
+void telaMetaDados(tFilme **filmes, int id, tUsuario *usuario, char* fileNameHistorico);
 
+void telaHistorico(tUsuario* usuario, tFilme** filmes);
+
+void UFLIX(char *fileNameUsuarios, char *fileNameHistorico, char *fileNameFilmes, tFilme **filmes);
 
 #endif

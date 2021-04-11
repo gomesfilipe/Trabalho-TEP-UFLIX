@@ -39,7 +39,7 @@ int contaFilmesNoHistoricoCSV(char *fileName, char *login){
 
 tData* leData(){
     int dia, mes, ano;
-    scanf("%d %d %d", &dia, &mes, &ano);
+    scanf("%d/%d/%d", &dia, &mes, &ano);
     tData *data = criaData(dia, mes, ano);
 
     return data;
