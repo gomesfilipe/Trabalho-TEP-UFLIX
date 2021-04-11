@@ -83,7 +83,8 @@ int dataValida(tData *data);
 /**
  * @brief Verifica se d1 é maior, menor ou igual a d2.
  * Esta função não faz tratamento caso a data seja inválida.
- * @param data Ponteiro tData d1 e d2.
+ * @param d1 Ponteiro de tData. É uma das datas que será comparada.
+ * @param d2 Ponteiro de tData. É uma das datas que será comparada.
  * @return 1 se data d1 é maior, -1 se data d2 é menor e 0 se as duas datas são iguais.
  * */
 int datacmp(tData *d1, tData *d2);

@@ -143,7 +143,7 @@ char* getLogin(tUsuario* usuario){
 }
 
 
-//documentar
+
 //makefile
 //verbosidade
 //conta ativa e inativa

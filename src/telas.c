@@ -80,7 +80,7 @@ void telaInicial(char *fileNameUsuarios, char *fileNameHistorico, char *fileName
                 break;
             
             default: 
-                printf("Botao invalido!");
+                printf("Botao invalido\n");
         }
     }
 
@@ -108,8 +108,6 @@ void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, cha
         maxPaginas = qtdFilmes / TAMPAG + 1;
     }
 
-// gcc client/main.c src/*.c -o main
-
     while(success == 0){
         printf("1. Listar filmes\n");
         printf("2. Meu perfil\n");
@@ -125,6 +123,7 @@ void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, cha
             case LISTARFILMES:
                 
                 while(1){
+                    //limpaTela();
                     imprimePagina(filmes, nPagina, qtdFilmes);
                     printf("M - Mais filmes\n");
                     printf("m - Menos filmes\n");
@@ -134,7 +133,7 @@ void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, cha
                     botao2int = atoi(botao2);
                     
                     if(strcmp(botao2, "M") == 0){ 
-                        if(nPagina < maxPaginas ){
+                        if(nPagina <= maxPaginas ){
                             nPagina++;
                             idMin += TAMPAG;
                             idMax += TAMPAG;
@@ -147,18 +146,17 @@ void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, cha
                             idMax -= TAMPAG;
                         }
                     
-                    } else if(botao2int == 0){ // voltar
+                    } else if(strcmp(botao2, "0") == 0){ // voltar
                         free(botao2);
                         break;
                     
                     } else if(botao2int < idMin || botao2int > idMax || botao2int < 0 || botao2int > qtdFilmes){
                         printf("Botao invalido\n");
                     
-                    } else{ // mostrar metadados do filme
+                    } else{
                         telaMetaDados(filmes, botao2int, usuario, fileNameHistorico);
                         break;
                     }
-
                 }
                 
                 break;
@@ -199,12 +197,13 @@ void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, cha
 
                 while(1){
                     scanf("%d", &botao4);
+                    printf("[%d]", botao4);
 
                     if(botao4 == VOLTA){
                         free(busca);
                         break;
                     }
-
+                    
                     printf("Botao invalido\n");
                 }
 

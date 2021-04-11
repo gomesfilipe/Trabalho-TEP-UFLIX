@@ -58,14 +58,32 @@ tUsuario* criaUsuario(char *login, char *senha, char *fileName);
 /**
  * @brief Libera memória de um ponteiro de usuário.
  * @param usuario Usuario que será liberado da memória.
+ * @return Função sem retorno.
  **/
 void destroiUsuario(tUsuario *usuario);
 
+/**
+ * @brief Imprime um usuário no terminal.
+ * @param usuario Usuário que terá as suas informações impressas na tela.
+ * @param filmes Vetor de ponteiros de filme.
+ * @return Função sem retorno.
+ **/
 void imprimeUsuario(tUsuario *usuario, tFilme **filmes);
 
-
+/**
+ * @brief  Captura o campo histórico de um determinado usuário. Esta função serve para evitar o acesso direto
+ * ao campo da struct
+ * @param usuario É o usuário que terá o histórico capturado.
+ * @return Ponteiro que faz referência ao histórico do usuário.
+**/
 tHistorico* getHistorico(tUsuario* usuario);
 
+/**
+ * @brief Captura o campo login de um determinado usuário. Esta função serve para evitar o acesso direto
+ * ao campo da struct.
+ * @param usuario Usuário que terá o histórico capturado,.
+ * @return Ponteiro que faz referência login do usuário.
+ **/
 char* getLogin(tUsuario* usuario);
 
 #endif
