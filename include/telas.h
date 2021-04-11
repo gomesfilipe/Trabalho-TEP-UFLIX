@@ -10,24 +10,6 @@ enum TelaMetaDados{ASSISTIR = 1, VOLTAR};
 enum ProcuraFilmes{VOLTA = 1};
 enum TelaHistorico{HISTORICO = 1, EXCLUIR, VOLT};
 
-// #define LOGIN 1
-// #define CADASTRO 2
-// #define SAIR 3
-
-// #define LISTARFILMES 1
-// #define MEUPERFIL 2
-// #define PROCURARFILME 3
-// #define SAIDA 4 // Para não repetir SAIR
-
-// #define ASSISTIR 1
-// #define VOLTAR 
-
-// #define VOLTA 1
-
-// #define HISTORICO 1
-// #define EXCLUIR 2
-// #define VOLT 3  
-
 /**
  * @brief Faz o controle do menu inicial da UFLIX, tanto da parte visual quanto das entradas do usuário, realizando
  * login ou casdastro ou sair do programa. Se o login estiver correto ou se o usuário tiver feito cadastro, essa função 

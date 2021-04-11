@@ -5,7 +5,7 @@ void telaInicial(char *fileNameUsuarios, char *fileNameHistorico, char *fileName
     char *senha = (char*) malloc(sizeof(char) * 100);
     char *confirmaSenha = (char*) malloc(sizeof(char) * 100);
     
-    tUsuario *usuario;
+    //tUsuario *usuario = NULL;
 
     int success = 0;
 
@@ -56,9 +56,9 @@ void telaInicial(char *fileNameUsuarios, char *fileNameHistorico, char *fileName
 
                 if(cadastro == CADASTROFEITO){
                     success = 1;
-                    usuario = criaUsuario(login, senha, fileNameHistorico);
+                    //usuario = criaUsuario(login, senha, fileNameHistorico);
                     printf("Cadastro feito com sucesso!\n");
-                    telaPrincipal(usuario, filmes, fileNameFilmes, fileNameHistorico);
+                    //telaPrincipal(usuario, filmes, fileNameFilmes, fileNameHistorico);
                 
                 } else if(cadastro == LOGINFORADOPADRAO){
                     printf("Login fora do padrao.\n");
@@ -87,8 +87,7 @@ void telaInicial(char *fileNameUsuarios, char *fileNameHistorico, char *fileName
     free(login);
     free(senha);
     free(confirmaSenha);
-    destroiUsuario(usuario);
-    destroiVetorDeFilmes(filmes, fileNameFilmes);
+    //destroiUsuario(usuario);
 }
  
 void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, char *fileNameHistorico){
@@ -197,7 +196,6 @@ void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, cha
 
                 while(1){
                     scanf("%d", &botao4);
-                    printf("[%d]", botao4);
 
                     if(botao4 == VOLTA){
                         free(busca);

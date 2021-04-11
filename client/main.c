@@ -6,7 +6,9 @@ int main(){
     char *fileNameUsuarios = "./data/usuarios.csv";
     
     tFilme **filmes = leFilmes(fileNameFilmes);
+    
     UFLIX(fileNameUsuarios, fileNameHistorico, fileNameFilmes, filmes);
     
+    destroiVetorDeFilmes(filmes, fileNameFilmes);
     return 0;
 } 

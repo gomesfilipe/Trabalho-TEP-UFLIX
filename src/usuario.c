@@ -106,7 +106,7 @@ int cadastraUsuario(char *login, char *senha, char *confirmaSenha, char *fileNam
 
 
 tUsuario* inativarConta(tUsuario *usuario){
-    usuario->ativo = 0; //inativando usuario
+    usuario->ativo = 0;
     return usuario;
 }
 
@@ -144,6 +144,8 @@ char* getLogin(tUsuario* usuario){
 
 
 
-//makefile
+//colocar as funcoes para destruir as coisas quando encerraro programa
+
 //verbosidade
 //conta ativa e inativa
+//tratamento dos botoes de int pra string, para nao dar loop infinto quando usaurio digita letras

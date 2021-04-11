@@ -117,7 +117,7 @@ void imprimePagina(tFilme **filmes, int nPagina, int qtdFilmes){
 }
 
 void pesquisaFilmes(char *busca, tFilme **filmes, int qtdFilmes){
-    //int cont = 1;
+    int cont = 0;
     converteMinuscula(busca); // Convertendo para minúsculo para não distinguir letras maiúsculas de minúsculas durante a busca.
     
     for(int i = 0; i < qtdFilmes; i++){
@@ -126,12 +126,15 @@ void pesquisaFilmes(char *busca, tFilme **filmes, int qtdFilmes){
 
         if(strstr(aux, busca) != NULL){
             printf("%d - %s\n", filmes[i]->id, filmes[i]->titulo);
-            //printf("%d - %s\n", cont, filmes[i]->titulo);
-            //cont++;
+            cont++;
         }
         
         free(aux);
-    } 
+    }
+
+    if(cont == 0){
+        printf("Nenhum filme encontrado\n");
+    }
 }
 
 void imprimeDescricao(tFilme *filme){ 
