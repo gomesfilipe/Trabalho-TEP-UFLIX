@@ -150,7 +150,7 @@ char* getLogin(tUsuario* usuario){
 
 
 
-//colocar as funcoes para destruir as coisas quando encerraro programa
+
 
 //verbosidade
 //conta ativa e inativa

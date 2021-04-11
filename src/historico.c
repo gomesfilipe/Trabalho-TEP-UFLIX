@@ -110,7 +110,6 @@ tHistorico* resgataHistorico(char *login, char *fileName){
 
 tHistorico* adicionaFilmeHistorico(tHistorico *hist, int id, float nota, int dia, int mes, int ano, char *fileName, char * login){ 
     if(hist->qtd_filmes_atual == hist->qtd_filmes_max){ //se precisar de mais espaco pra adicionar o filme
-        printf("\nrealocou!\n");
         hist->id = (int*) realloc(hist->id, sizeof(int) * (hist->qtd_filmes_atual + AUMENTO));
         hist->notas = (float*) realloc (hist->notas, sizeof(float) * (hist->qtd_filmes_atual + AUMENTO));
         hist->data = (tData**) realloc (hist->data, sizeof(tData*) * (hist->qtd_filmes_atual + AUMENTO));
@@ -132,7 +131,7 @@ void ordenaHistoricoPorData(tHistorico *hist){
     float notaAux;
     tData *dataAux;
     for(int i = 0; i < hist->qtd_filmes_atual; i++){
-        for(int j = i+ 1; j < hist->qtd_filmes_atual; j++){
+        for(int j = i + 1; j < hist->qtd_filmes_atual; j++){
             if(datacmp(hist->data[i], hist->data[j]) == -1){ //ou seja, quando a data na posicao i é menor que na j
                 notaAux = hist->notas[j];
                 hist->notas[j] = hist->notas[i];

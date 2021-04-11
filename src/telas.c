@@ -61,7 +61,6 @@ void telaInicial(char *fileNameUsuarios, char *fileNameHistorico, char *fileName
                     usuario = criaUsuario(login, senha, fileNameHistorico);
                     printf("Cadastro feito com sucesso!\n");
                     telaPrincipal(usuario, filmes, fileNameFilmes, fileNameHistorico);
-                    printf("[chegou destroi cadastro]\n");
                 
                 } else if(cadastro == LOGINFORADOPADRAO){
                     printf("Login fora do padrao.\n");
@@ -237,7 +236,7 @@ void telaMetaDados(tFilme **filmes, int id, tUsuario *usuario, char* fileNameHis
         printf("2- Voltar\n");
 
         scanf("%d", &botao);
-        //printf("[%d]\n", botao);
+
         switch(botao){
             case ASSISTIR: 
                 encerra = 1;
@@ -262,10 +261,7 @@ void telaMetaDados(tFilme **filmes, int id, tUsuario *usuario, char* fileNameHis
                 char *login = getLogin(usuario);
 
                 adicionaFilmeHistorico(hist, id, nota, dia, mes, ano, fileNameHistorico, login);
-                
-                free(login);
-                destroiHistorico(hist);
-    
+                free(data);
                 break;
             
             case VOLTAR:
