@@ -1,4 +1,4 @@
-#include "../include/tela.h"
+#include "../include/telas.h"
 
 void telaInicial(char *fileNameUsuarios, char *fileNameHistorico, char *fileNameFilmes, tFilme **filmes){
     char *login = (char*) malloc(sizeof(char) * 100);
@@ -216,7 +216,7 @@ void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, cha
                 break;
             
             default: 
-                printf("Botão invalido!\n");
+                printf("Botao invalido!\n");
         }
     }
 }

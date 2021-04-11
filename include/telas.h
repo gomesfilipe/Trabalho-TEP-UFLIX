@@ -1,8 +1,10 @@
-#ifndef TELA_H
-#define TELA_H
+#ifndef TELAS_H
+#define TELAS_H
 
 #include "usuario.h"
 #include "utils.h"
+
+//TODO FAZER ENUM
 
 #define LOGIN 1
 #define CADASTRO 2
