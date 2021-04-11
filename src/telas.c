@@ -5,16 +5,18 @@ void telaInicial(char *fileNameUsuarios, char *fileNameHistorico, char *fileName
     char *senha = (char*) malloc(sizeof(char) * 100);
     char *confirmaSenha = (char*) malloc(sizeof(char) * 100);
     
-    //tUsuario *usuario = NULL;
+    tUsuario *usuario = NULL;
+    //tUsuario *usuario = criaUsuario("x", "y", fileNameHistorico);
+    //tUsuario *usuario2 = usuario;
 
     int success = 0;
+    int botao;
 
     while(success == 0){
         printf("1. Login\n");
         printf("2. Cadastro\n");
         printf("3. Sair\n");
 
-        int botao;
         scanf("%d", &botao);
         
         switch(botao){
@@ -29,7 +31,7 @@ void telaInicial(char *fileNameUsuarios, char *fileNameHistorico, char *fileName
             
                 if(loginUsuario == LOGINEFETUADO){
                     success = 1;
-                    tUsuario *usuario = criaUsuario(login, senha, fileNameHistorico);
+                    usuario = criaUsuario(login, senha, fileNameHistorico);
                     printf("Login efetuado com sucesso!\n");
                     //limpaTela();
                     telaPrincipal(usuario, filmes, fileNameFilmes, fileNameHistorico);
@@ -56,9 +58,10 @@ void telaInicial(char *fileNameUsuarios, char *fileNameHistorico, char *fileName
 
                 if(cadastro == CADASTROFEITO){
                     success = 1;
-                    //usuario = criaUsuario(login, senha, fileNameHistorico);
+                    usuario = criaUsuario(login, senha, fileNameHistorico);
                     printf("Cadastro feito com sucesso!\n");
-                    //telaPrincipal(usuario, filmes, fileNameFilmes, fileNameHistorico);
+                    telaPrincipal(usuario, filmes, fileNameFilmes, fileNameHistorico);
+                    printf("[chegou destroi cadastro]\n");
                 
                 } else if(cadastro == LOGINFORADOPADRAO){
                     printf("Login fora do padrao.\n");
@@ -84,21 +87,24 @@ void telaInicial(char *fileNameUsuarios, char *fileNameHistorico, char *fileName
         }
     }
 
-    free(login);
-    free(senha);
     free(confirmaSenha);
-    //destroiUsuario(usuario);
+    if(usuario != NULL){
+        destroiUsuario(usuario);
+    } else{
+        free(login);
+        free(senha);
+    }
 }
  
 void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, char *fileNameHistorico){
-    int botao, success = 0, botao3, botao4;
     char *botao2 = (char*) malloc(sizeof(char) * 10);
+    char *busca = (char*) malloc(sizeof(char) * 128);
+    int botao, success = 0, botao3, botao4;
     int botao2int;
     int qtdFilmes = contaLinhasCSV(fileNameFilmes);
     int nPagina = 1;
     int idMin = (nPagina - 1) * TAMPAG + 1;
     int idMax = nPagina * TAMPAG; 
-    char *busca = (char*) malloc(sizeof(char) * 128);
     int maxPaginas;
     
     if(qtdFilmes % TAMPAG == 0){
@@ -146,7 +152,7 @@ void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, cha
                         }
                     
                     } else if(strcmp(botao2, "0") == 0){ // voltar
-                        free(botao2);
+                        //free(botao2);
                         break;
                     
                     } else if(botao2int < idMin || botao2int > idMax || botao2int < 0 || botao2int > qtdFilmes){
@@ -198,7 +204,7 @@ void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, cha
                     scanf("%d", &botao4);
 
                     if(botao4 == VOLTA){
-                        free(busca);
+                        //free(busca);
                         break;
                     }
                     
@@ -216,6 +222,9 @@ void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, cha
                 printf("Botao invalido!\n");
         }
     }
+
+    free(botao2);
+    free(busca);
 }
 
 void telaMetaDados(tFilme **filmes, int id, tUsuario *usuario, char* fileNameHistorico){

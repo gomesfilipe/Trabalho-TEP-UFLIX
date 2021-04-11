@@ -87,7 +87,7 @@ tHistorico* resgataHistorico(char *login, char *fileName){
     
     int posHist = 0;
 
-    for(int i=0; i < contaLinhasCSV(fileName); i++){
+    for(int i = 0; i < contaLinhasCSV(fileName); i++){
         fscanf(f, "%[^,],", loginAux);
         if(strcmp(login, loginAux) == 0){  //se forem iguais
             fscanf(f, "%d,", &hist->id[posHist]);
@@ -206,9 +206,10 @@ void imprimeHistoricoCSV(int id, float nota, int dia, int mes, int ano, char *fi
 
 void destroiHistorico(tHistorico *hist){
     for(int i = 0; i < hist->qtd_filmes_atual; i++){
-        destroiData(hist->data[i]);
+        destroiData(hist->data[i]);  
     }
     
+    free(hist->data);
     free(hist->id);
     free(hist->notas);
     free(hist);

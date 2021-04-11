@@ -21,17 +21,22 @@ int efetuaLogin(char* login, char* senha, char* fileName){
     } 
     
     for(int i=0; i < contaLinhasCSV(fileName); i++){
-        fscanf(f, "%[^,],%[^\n]\n" , loginAux, senhaAux); 
+        fscanf(f, "%[^,]%*c%s\n", loginAux, senhaAux);
+        
+        //fscanf(f, "%s[^,]%*c%[^\n]\n", loginAux, senhaAux);
+        //printf("loginaux [%s]\nsenhaaux [%s123]", loginAux, senhaAux); 
         if(strcmp(login, loginAux) == 0){ //login existe
             if(strcmp(senha, senhaAux) == 0){
                 //printf("Login efetuado com sucesso!\n");
                 free(loginAux);
                 free(senhaAux);
+                fclose(f);
                 return LOGINEFETUADO; 
             } else{
                 //printf("Senha incorreta!\n");
                 free(loginAux);
                 free(senhaAux);
+                fclose(f);
                 return SENHAINCORRETA; 
             }
         }  
@@ -40,6 +45,7 @@ int efetuaLogin(char* login, char* senha, char* fileName){
     //printf("Usuario nao cadastrado!\n");
     free(loginAux);
     free(senhaAux);
+    fclose(f);
     return USUARIONAOCADASTRADO;
 }
 
