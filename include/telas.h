@@ -32,9 +32,10 @@ void telaInicial(char *fileNameUsuarios, char *fileNameHistorico, char *fileName
  * @param fileNameFilmes Caminho para o arquivo CSV de filmes.
  * @param fileNameHistorico Caminho para o arquivo CSV de histórico.
  * @param verbosidade Define se haverá verbosidade ou não na tela. Se for igual a 0, não terá, se for 1, terá.
+ * @param fileNameUsuarios Caminho para o arquivo CSV de usuários.
  * @return Função sem retorno.
  **/ 
-void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, char *fileNameHistorico, int verbosidade);
+void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, char *fileNameHistorico, int verbosidade, char *fileNameUsuarios);
 
 /**
  * @brief Tela referente aos metadados de um determinado filme. Nessa janela, o usuário pode escolher para assistir

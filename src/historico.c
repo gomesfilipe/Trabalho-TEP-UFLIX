@@ -15,8 +15,9 @@ struct historico{
 };
 
 //conta filmes no histórico de um usuário
-int contaFilmesNoHistoricoCSV(char *fileName, char *login){
-    char *loginAux = (char*) malloc(sizeof(char) * 100);
+int contaFilmesNoHistoricoCSV(char *fileName, int idUnica){
+    //char *loginAux = (char*) malloc(sizeof(char) * 100);
+    int idUnicaAux;
     int counter = 0;
     FILE *f = fopen(fileName, "r");
     if(f == NULL){
@@ -25,15 +26,15 @@ int contaFilmesNoHistoricoCSV(char *fileName, char *login){
     }
 
     for(int i = 0; i < contaLinhasCSV(fileName); i++){
-        fscanf(f, "%[^,]", loginAux);
+        fscanf(f, "%d", &idUnicaAux);
         fscanf(f, "%*[^\n]\n");
-        if(strcmp(loginAux, login) == 0){
+        if(idUnicaAux == idUnica){
             counter++;
         }
     }
 
     fclose(f);
-    free(loginAux);
+   // free(loginAux);
     return counter;
 }
 
@@ -59,8 +60,9 @@ tHistorico* criaPrimeiroHistorico(){   //testamos ta ok
 //ja deixar as funcoes de leitura de int* notas, int* id aumentadas para evitar realloc
 //ja deixamos aumentado pra evitar realloc
 //dar free nos paramentros depois
-tHistorico* resgataHistorico(char *login, char *fileName){
-    int qtd_filmes_atual = contaFilmesNoHistoricoCSV(fileName, login);
+//TODO OK
+tHistorico* resgataHistorico(int idUnica, char *fileName){
+    int qtd_filmes_atual = contaFilmesNoHistoricoCSV(fileName, idUnica);
 
     tHistorico *hist;
     
@@ -77,7 +79,8 @@ tHistorico* resgataHistorico(char *login, char *fileName){
     hist->id = (int*) malloc(sizeof(int) * (qtd_filmes_atual + AUMENTO)); 
 
     int diaAux, mesAux, anoAux;
-    char *loginAux= (char*) malloc(sizeof(char) * 100);
+    //char *loginAux= (char*) malloc(sizeof(char) * 100);
+    int idUnicaAux;
     
     FILE *f = fopen(fileName, "r");
     if(f == NULL){
@@ -88,8 +91,8 @@ tHistorico* resgataHistorico(char *login, char *fileName){
     int posHist = 0;
 
     for(int i = 0; i < contaLinhasCSV(fileName); i++){
-        fscanf(f, "%[^,],", loginAux);
-        if(strcmp(login, loginAux) == 0){  //se forem iguais
+        fscanf(f, "%d,", &idUnicaAux);
+        if(idUnicaAux == idUnica){  //se forem iguais
             fscanf(f, "%d,", &hist->id[posHist]);
             fscanf(f, "%f,", &hist->notas[posHist]);
             fscanf(f, "%d/%d/%d\n", &diaAux, &mesAux, &anoAux);
@@ -103,12 +106,13 @@ tHistorico* resgataHistorico(char *login, char *fileName){
     }
         
     fclose(f);
-    free(loginAux);
+    //free(loginAux);
     
     return hist;
 }
 
-tHistorico* adicionaFilmeHistorico(tHistorico *hist, int id, float nota, int dia, int mes, int ano, char *fileName, char * login){ 
+//TODO ok
+tHistorico* adicionaFilmeHistorico(tHistorico *hist, int id, float nota, int dia, int mes, int ano, char *fileName, int idUnica){ 
     if(hist->qtd_filmes_atual == hist->qtd_filmes_max){ //se precisar de mais espaco pra adicionar o filme
         hist->id = (int*) realloc(hist->id, sizeof(int) * (hist->qtd_filmes_atual + AUMENTO));
         hist->notas = (float*) realloc (hist->notas, sizeof(float) * (hist->qtd_filmes_atual + AUMENTO));
@@ -121,10 +125,7 @@ tHistorico* adicionaFilmeHistorico(tHistorico *hist, int id, float nota, int dia
     hist->data[hist->qtd_filmes_atual] = criaData(dia, mes, ano);
     hist->qtd_filmes_atual++;
   
-    imprimeHistoricoCSV(id, nota, dia, mes, ano, fileName, login);
-
-    printf("qtd filmes atual [%d]\n", hist->qtd_filmes_atual);
-    printf("qtd filmes max [%d]\n", hist->qtd_filmes_max);
+    imprimeHistoricoCSV(id, nota, dia, mes, ano, fileName, idUnica);
 
     return hist;
 }
@@ -192,7 +193,8 @@ void imprimirHistorico(tHistorico *hist, tFilme **filmes){
     }
 }
 
-void imprimeHistoricoCSV(int id, float nota, int dia, int mes, int ano, char *fileName, char *login){
+//TODO OK
+void imprimeHistoricoCSV(int id, float nota, int dia, int mes, int ano, char *fileName, int idUsuario){ 
     char *nomeAux = (char*) malloc(sizeof(char) * 100);
     FILE *f = fopen(fileName, "a"); //modo append
     if(f == NULL){
@@ -200,7 +202,7 @@ void imprimeHistoricoCSV(int id, float nota, int dia, int mes, int ano, char *fi
         exit(1);
     }
     
-    fprintf(f, "%s,%d,%.1f,%02d/%02d/%04d\n", login, id, nota, dia, mes, ano);
+    fprintf(f, "%d,%d,%.1f,%02d/%02d/%04d\n", idUsuario, id, nota, dia, mes, ano);
     
     fclose(f);
     free(nomeAux);

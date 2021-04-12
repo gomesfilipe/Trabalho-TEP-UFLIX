@@ -36,13 +36,13 @@ void telaInicial(char *fileNameUsuarios, char *fileNameHistorico, char *fileName
             
                 if(loginUsuario == LOGINEFETUADO){
                     success = 1;
-                    usuario = criaUsuario(login, senha, fileNameHistorico);
+                    usuario = criaUsuario(login, senha, fileNameHistorico, fileNameUsuarios);
                     if(verbosidade){
                         printf("Login efetuado com sucesso!\n");
                         sleep(TIME);
                     }
                         
-                    telaPrincipal(usuario, filmes, fileNameFilmes, fileNameHistorico, verbosidade);
+                    telaPrincipal(usuario, filmes, fileNameFilmes, fileNameHistorico, verbosidade, fileNameUsuarios);
 
                 } else if(loginUsuario == SENHAINCORRETA){
                     if(verbosidade){
@@ -72,13 +72,13 @@ void telaInicial(char *fileNameUsuarios, char *fileNameHistorico, char *fileName
 
                 if(cadastro == CADASTROFEITO){
                     success = 1;
-                    usuario = criaUsuario(login, senha, fileNameHistorico);
+                    usuario = criaUsuario(login, senha, fileNameHistorico, fileNameUsuarios);
                     if(verbosidade){
                         printf("Cadastro feito com sucesso!\n");
                         sleep(TIME);
                     }
                     
-                    telaPrincipal(usuario, filmes, fileNameFilmes, fileNameHistorico, verbosidade);
+                    telaPrincipal(usuario, filmes, fileNameFilmes, fileNameHistorico, verbosidade, fileNameUsuarios);
                 
                 } else if(cadastro == LOGINFORADOPADRAO){
                     if(verbosidade){
@@ -130,7 +130,7 @@ void telaInicial(char *fileNameUsuarios, char *fileNameHistorico, char *fileName
     }
 }
  
-void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, char *fileNameHistorico, int verbosidade){
+void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, char *fileNameHistorico, int verbosidade, char *fileNameUsuarios){
     char *botao2 = (char*) malloc(sizeof(char) * 100);
     char *busca = (char*) malloc(sizeof(char) * 128);
     int qtdFilmes = contaLinhasCSV(fileNameFilmes);
@@ -228,7 +228,7 @@ void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, cha
                     
                     }else if(botao3 == EXCLUIR){
                         success = 1;
-                        usuario = inativarConta(usuario);
+                        usuario = inativarConta(usuario, fileNameUsuarios);
                         if(verbosidade) printf("Encerrando programa...\n");
                         break;
                     
@@ -255,9 +255,9 @@ void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, cha
                     scanf("%[^\n]", busca);
                 
                 } else{
-                    getchar();
-                    scanf("%*c");
-                    strtok(busca, '\n'); %[^/n] // um jeito que nao pegue o \n e pegue espaço
+                    // getchar();
+                    // scanf("%*c");
+                    // strtok(busca, '\n'); %[^/n] // um jeito que nao pegue o \n e pegue espaço
                     // char buscar[100];
                     // for(int i = 0; ; i++){
                     //     //buscar[i] = getchar();
@@ -356,9 +356,10 @@ void telaMetaDados(tFilme **filmes, int id, tUsuario *usuario, char* fileNameHis
                 int mes = getMes(data);
                 int ano = getAno(data);
                 tHistorico *hist = getHistorico(usuario);
-                char *login = getLogin(usuario);
+                //char *login = getLogin(usuario);
+                int idUsuario = getIdUnicaDaStructUsuario(usuario);
 
-                adicionaFilmeHistorico(hist, id, nota, dia, mes, ano, fileNameHistorico, login);
+                adicionaFilmeHistorico(hist, id, nota, dia, mes, ano, fileNameHistorico, idUsuario);
                 free(data);
                 break;
             

@@ -12,8 +12,24 @@ int main(int argc, char** argv){ //argv é vetor de string
     
     destroiVetorDeFilmes(filmes, fileNameFilmes);
     
-    return 0;
+    // printf("compilou1\n");
+    // char *fileNameUsuarios = "./data/usuarios.csv";
+    // char *login = "joaozinho";
+    // char *senha = "goiaba";
+    //char *confirmaSenha = "goiaba";
+    //printf("id unica: %d\n", getIdUnicaUsuario(fileNameUsuarios, login));
+    //printf("cadastrou? [%d]\n", cadastraUsuario(login, senha, confirmaSenha, fileNameUsuarios));
 
+    // tUsuario *u = criaUsuario(login, senha, fileNameHistorico, fileNameUsuarios);
+    // u = inativarConta(u, fileNameUsuarios); //ver no CSV
+    // destroiUsuario(u);
+    // int idUnica = 10;
+    // tHistorico* h = resgataHistorico(idUnica, fileNameHistorico);
+
+    // imprimirHistorico(h, filmes);
+    //imprimeHistoricoCSV(15, 10.0, 12 , 04 , 2021, fileNameHistorico, 10);
+
+    return 0;
 } 
 
 

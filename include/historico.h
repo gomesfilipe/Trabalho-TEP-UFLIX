@@ -18,10 +18,10 @@ tData* leData();
 /**
  * @brief Conta quantos filmes têm no histórico de um determinado usuário com base em seus dados presentes no arquivo CSV.
  * @param fileName É o caminho do arquivo CSV de históricos.
- * @param login Login do usuário.
+ * @param idUnica É a idÚnica de um usuário.
  * @return Número de filmes que o usuário possui no histórico.
 **/
-int contaFilmesNoHistoricoCSV(char *fileName, char *login);
+int contaFilmesNoHistoricoCSV(char *fileName, int idUnica);
 
 /**
  * @brief Aloca memória para o histórico de um usuário e seus campos, caso ele ainda não tenha assistido nenhum filme.
@@ -33,12 +33,12 @@ tHistorico* criaPrimeiroHistorico();
 /**
  * @brief Aloca memória para o histórico de um usuário e seus campos.
  * Ela aloca memória para a quantidade de filmes que o usuário já tinha assistido antes e para mais alguns filmes que ele ainda irá assistir.
- * @param login Login do usuário.
+ * @param idUnica Id do usuário.
  * @param fileName Caminho para o arquivo CSV de históricos.
  * @return tHistorico com memória alocada para armazenar os dados do histórico dos filmes já assistidos e 
  * os dados dos filmes que serão assistidos posteriormente.
  **/
-tHistorico* resgataHistorico(char *login, char *fileName);
+tHistorico* resgataHistorico(int idUnica, char *fileName);
 
 
 /**
@@ -51,10 +51,10 @@ tHistorico* resgataHistorico(char *login, char *fileName);
  * @param mes Mês que o usuário assistiu o filme.
  * @param ano Ano que o usário assistiu o filme.
  * @param fileName É o caminho do arquivo CSV que possui os filmes no histórico.
- * @param login É o login do usuário que está no arquivo historico.csv
+ * @param idUnica É o id do usuário.
  * @return Histórico do usuário atualizado.
 **/
-tHistorico* adicionaFilmeHistorico(tHistorico* hist, int id, float nota, int dia, int mes, int ano, char *fileName, char *login);
+tHistorico* adicionaFilmeHistorico(tHistorico* hist, int id, float nota, int dia, int mes, int ano, char *fileName, int idUnica);
 
 /**
  * @brief Imprime o histórico de um usuário, com todos filme que assistiu, a respectiva nota e data de cada filme. A data se refere ao dia que o usuário assistiu o filme.
@@ -89,10 +89,10 @@ void ordenaHistoricoPorNota(tHistorico *hist);
  * @param mes Mês que assistiu o filme.
  * @param ano Ano que assistiu o filme.
  * @param fileName Caminho para o arquivo CSV que contém os dados dos usuários.
- * @param login Login do usuário.
+ * @param idUsuario É id única do usuário. Usuários ativos podem ter o mesmo login de usuários inativos, mas não a mesma id.
  * @return Função sem retorno, pois somente escreve no arquivo CSV.
  **/
-void imprimeHistoricoCSV(int id, float nota, int dia, int mes, int ano, char *fileName, char *login);
+void imprimeHistoricoCSV(int id, float nota, int dia, int mes, int ano, char *fileName, int idUsuario);
 
 /**
  * @brief Libera da memória um ponteiro de tHistorico.
