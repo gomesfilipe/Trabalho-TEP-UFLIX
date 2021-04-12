@@ -75,7 +75,7 @@ tHistorico* resgataHistorico(char *login, char *fileName){
     hist->data = (tData**) malloc(sizeof(tData*) * (qtd_filmes_atual + AUMENTO));
     hist->notas = (float*) malloc(sizeof(float) * (qtd_filmes_atual + AUMENTO));
     hist->id = (int*) malloc(sizeof(int) * (qtd_filmes_atual + AUMENTO)); 
-    
+
     int diaAux, mesAux, anoAux;
     char *loginAux= (char*) malloc(sizeof(char) * 100);
     
@@ -122,6 +122,9 @@ tHistorico* adicionaFilmeHistorico(tHistorico *hist, int id, float nota, int dia
     hist->qtd_filmes_atual++;
   
     imprimeHistoricoCSV(id, nota, dia, mes, ano, fileName, login);
+
+    printf("qtd filmes atual [%d]\n", hist->qtd_filmes_atual);
+    printf("qtd filmes max [%d]\n", hist->qtd_filmes_max);
 
     return hist;
 }

@@ -143,7 +143,6 @@ tHistorico* getHistorico(tUsuario *usuario){
     return usuario->hist;
 }
 
-
 char* getLogin(tUsuario* usuario){
     return usuario->login;
 }
@@ -151,7 +150,6 @@ char* getLogin(tUsuario* usuario){
 
 
 
-//corrigir vazamento, filipe desconfia pq vimos mts filmes, problema no realoc.
-// colocar pra ver 5 filmes, encerrar programa, ver se teve vazamento, se n teve, sair e assitir 10 filmes, se teve vazamento, é problema no realoc
-//verbosidade
+//verbosidade , um dos botoes n foi
+
 //conta ativa e inativa

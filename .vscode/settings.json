@@ -3,6 +3,7 @@
         "stdio.h": "c",
         "utils.h": "c",
         "usuario.h": "c",
-        "sstream": "c"
+        "sstream": "c",
+        "telas.h": "c"
     }
 }
