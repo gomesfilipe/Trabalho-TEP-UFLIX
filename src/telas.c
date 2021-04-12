@@ -6,10 +6,9 @@ void telaInicial(char *fileNameUsuarios, char *fileNameHistorico, char *fileName
     char *confirmaSenha = (char*) malloc(sizeof(char) * 100);
     
     tUsuario *usuario = NULL;
-    //tUsuario *usuario = criaUsuario("x", "y", fileNameHistorico);
-    //tUsuario *usuario2 = usuario;
 
     int success = 0;
+    char botaoAux[100]; //só para testar se é não númérico
     int botao;
 
     while(success == 0){
@@ -17,7 +16,8 @@ void telaInicial(char *fileNameUsuarios, char *fileNameHistorico, char *fileName
         printf("2. Cadastro\n");
         printf("3. Sair\n");
 
-        scanf("%d", &botao);
+        scanf("%s", botaoAux);
+        botao = atoi(botaoAux); //retorna 0 se não for número e cai em default
         
         switch(botao){
             case LOGIN:
@@ -89,6 +89,7 @@ void telaInicial(char *fileNameUsuarios, char *fileNameHistorico, char *fileName
     free(confirmaSenha);
     if(usuario != NULL){
         destroiUsuario(usuario);
+    
     } else{
         free(login);
         free(senha);
@@ -96,16 +97,18 @@ void telaInicial(char *fileNameUsuarios, char *fileNameHistorico, char *fileName
 }
  
 void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, char *fileNameHistorico){
-    char *botao2 = (char*) malloc(sizeof(char) * 10);
+    char *botao2 = (char*) malloc(sizeof(char) * 100);
     char *busca = (char*) malloc(sizeof(char) * 128);
-    int botao, success = 0, botao3, botao4;
-    int botao2int;
     int qtdFilmes = contaLinhasCSV(fileNameFilmes);
+    int success = 0;
+    int botao2int;
     int nPagina = 1;
     int idMin = (nPagina - 1) * TAMPAG + 1;
     int idMax = nPagina * TAMPAG; 
     int maxPaginas;
-    
+    char botaoAux[100], botao3Aux[100], botao4Aux[100];
+    int botao, botao3, botao4;
+
     if(qtdFilmes % TAMPAG == 0){
         maxPaginas = qtdFilmes / TAMPAG;
     } else{
@@ -117,11 +120,13 @@ void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, cha
         printf("2. Meu perfil\n");
         printf("3. Procurar filme\n");
         printf("4. Sair\n");
-        
-        scanf("%d", &botao);
+         
         nPagina = 1;
         idMin = (nPagina - 1) * TAMPAG + 1;
         idMax = nPagina * TAMPAG; 
+        
+        scanf("%s", botaoAux); //talvez dê problema
+        botao = atoi(botaoAux);
         
         switch(botao){
             case LISTARFILMES:
@@ -171,7 +176,8 @@ void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, cha
                     printf("2. Excluir conta\n");
                     printf("3. Voltar\n");
                     
-                    scanf("%d", &botao3);
+                    scanf("%s", botao3Aux);
+                    botao3 = atoi(botao3Aux); 
                     
                     if(botao3 == HISTORICO){
                         telaHistorico(usuario, filmes);
@@ -200,10 +206,10 @@ void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, cha
                 printf("\n1- Voltar\n");
 
                 while(1){
-                    scanf("%d", &botao4);
+                    scanf("%s", botao4Aux);
+                    botao4= atoi(botao4Aux);
 
                     if(botao4 == VOLTA){
-                        //free(busca);
                         break;
                     }
                     
@@ -228,22 +234,35 @@ void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, cha
 
 void telaMetaDados(tFilme **filmes, int id, tUsuario *usuario, char* fileNameHistorico){
     int botao, encerra = 0;
+    char botaoAux[100];
     imprimeFilme(filmes[id - 1]);
-
 
     while(encerra == 0){
         printf("1- Assistir\n");
         printf("2- Voltar\n");
 
-        scanf("%d", &botao);
+        scanf("%s", botaoAux);
+        botao = atoi(botaoAux);
 
         switch(botao){
             case ASSISTIR: 
                 encerra = 1;
+                char notaAux[100];
                 float nota;
                 tData *data;
-                printf("Qual a sua avaliacao do filme? ");
-                scanf("%f", &nota);
+                while(1){ 
+                    printf("Qual a sua avaliacao do filme? ");
+                    scanf("%s", notaAux);
+                    if(ehStringNumerica(notaAux) == 1){ // Para diferenciar o '0 float' do retorno 0 da função atof quando seu parâmetro é uma string não numérica
+                        nota = atof(notaAux);
+                        if(nota <= 10.0){
+                            break;
+                        }
+                    }
+                        
+                    printf("Nota invalida! Digite novamente\n");
+                }
+                
                 while(1){
                     printf("Qual a data que voce assistiu o filme? ");
                     data = leData(); //falta ver se a data eh valida
@@ -275,20 +294,21 @@ void telaMetaDados(tFilme **filmes, int id, tUsuario *usuario, char* fileNameHis
 }
 
 void telaHistorico(tUsuario* usuario, tFilme** filmes){
-    char ordena;
+    char ordena[100];
     int botao;
+    char botaoAux[100];
     tHistorico *hist = getHistorico(usuario);
     getchar(); //para consumir o /n do ultimo botao
     while(1){
         printf("D - Ordenar historico por data\n");
         printf("N - Ordenar historico por nota\n");
-        ordena = getchar();
+        scanf("%s", ordena);
         
-        if(ordena == 'D'){
+        if(strcmp(ordena, "D") == 0){
             ordenaHistoricoPorData(hist);
             break;
         
-        } else if(ordena == 'N'){
+        } else if(strcmp(ordena, "N") == 0){
             ordenaHistoricoPorNota(hist);
             break;                     
         
@@ -301,7 +321,8 @@ void telaHistorico(tUsuario* usuario, tFilme** filmes){
 
     printf("\n1- Voltar\n");
     while(1){
-        scanf("%d", &botao);
+        scanf("%s", botaoAux);
+        botao = atoi(botaoAux);
         if(botao == VOLTA){
             break;
         }

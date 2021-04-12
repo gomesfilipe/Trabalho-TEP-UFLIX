@@ -151,7 +151,7 @@ char* getLogin(tUsuario* usuario){
 
 
 
-
+//corrigir vazamento, filipe desconfia pq vimos mts filmes, problema no realoc.
+// colocar pra ver 5 filmes, encerrar programa, ver se teve vazamento, se n teve, sair e assitir 10 filmes, se teve vazamento, é problema no realoc
 //verbosidade
 //conta ativa e inativa
-//tratamento dos botoes de int pra string, para nao dar loop infinto quando usaurio digita letras

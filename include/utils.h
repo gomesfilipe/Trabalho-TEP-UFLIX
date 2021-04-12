@@ -26,4 +26,12 @@ char* converteMinuscula(char *string);
  * @return Função sem retorno.
  **/
 void limpaTela();
+
+/**
+ * @brief Verifica se uma determinada string representa um número.
+ * @param str String a ser verificada.
+ * @return 1, caso a string represente um float, e 0 caso contrário.
+ **/
+int ehStringNumerica(char *str);
+
 #endif  
