@@ -29,33 +29,6 @@ tData* criaData(int dia, int mes, int ano){
     return d;
 }
 
-int getDia(tData *data){
-    return data->dia;
-}
-
-int getMes(tData *data){
-    return data->mes;
-}
-
-int getAno(tData *data){
-    return data->ano;
-}
-
-tData* setDia(tData* data, int dia){
-    data->dia = dia;
-    return data;
-}
-
-tData* setMes(tData* data, int mes){
-    data->mes = mes;
-    return data;
-}
-
-tData* setAno(tData* data, int ano){
-    data->ano = ano;
-    return data;
-}
-
 int ehBissexto(tData *data){
     if( (data->ano % 4 == 0 && data->ano % 100 != 0) ||  data->ano % 400 == 0 ){
         return 1;

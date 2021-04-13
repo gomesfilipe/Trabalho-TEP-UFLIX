@@ -263,7 +263,7 @@ void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, cha
                     //scanf("%s", busca);
                     int tam = strlen(busca);
                     // printf("tam antes %d\n", tam);
-                    busca[tam-2] = '\0';
+                    busca[tam - 2] = '\0';
                     // int tam2 = strlen(busca);
                     // printf("tam depois %d\n", tam2);
                     // printf("busca depois %s\n", busca);

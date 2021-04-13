@@ -18,60 +18,11 @@ typedef struct data tData;
 tData* criaData(int dia, int mes, int ano);
 
 /**
-* @brief  Obtém o dia de uma data.
-* @param data Ponteiro de tData.
-* @return Número inteiro que é o dia da data.
-**/
-int getDia(tData *data);
-
-/**
-* @brief  Obtém o mês de uma data.
-* @param data Ponteiro de tData.
-* @return Número inteiro que é o mês da data.
-**/
-int getMes(tData *data);
-
-/**
-* @brief  Obtém o ano de uma data.
-* @param data Ponteiro de tData.
-* @return Número inteiro que é o ano da data.
-**/
-int getAno(tData *data);
-
-/**
- * @brief Atualiza o valor do campo dia de tData.
- * Esta função não faz tratamento caso o dia seja inválido.
- * @param data Ponteiro tData cujo dia será atualizado.
- * @param dia Novo valor do dia para a data.
- * @return tData atualizada.
- * */
-tData* setDia(tData *data, int dia);
-
-/**
- * @brief Atualiza o valor do campo mês de tData.
- * Esta função não faz tratamento caso o mês seja inválido.
- * @param data Ponteiro tData cujo mês será atualizado.
- * @param mes Novo valor do mês para a data.
- * @return tData atualizada.
- * */
-tData* setMes(tData *data, int mes);
-
-/**
- * @brief Atualiza o valor do campo ano de tData.
- * Esta função não faz tratamento caso o dia seja inválido.
- * @param data Ponteiro tData cujo ano será atualizado.
- * @param ano Novo valor do ano para a data.
- * @return tData atualizada.
- * */
-tData* setAno(tData *data, int ano);
-
-/**
  * @brief Verifica se um ano é bissexto.
  * @param data Ponteiro tData.
  * @return 1 se o ano é bissexto e 0 se não é bissexto.
  * */
 int EhBissexto(tData *data);
-
 
 /**
  * @brief Verifica se uma string representa uma data válida.
