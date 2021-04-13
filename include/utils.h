@@ -34,4 +34,4 @@ void limpaTela();
  **/
 int ehStringNumerica(char *str);
 
-#endif  
+#endif 

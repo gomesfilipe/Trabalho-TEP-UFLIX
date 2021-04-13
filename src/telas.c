@@ -3,14 +3,14 @@
 #define TIME 2
 
 void telaInicial(char *fileNameUsuarios, char *fileNameHistorico, char *fileNameFilmes, tFilme **filmes, int verbosidade){
-    char *login = (char*) malloc(sizeof(char) * 100);
-    char *senha = (char*) malloc(sizeof(char) * 100);
-    char *confirmaSenha = (char*) malloc(sizeof(char) * 100);
+    char *login = (char*) malloc(sizeof(char) * 128);
+    char *senha = (char*) malloc(sizeof(char) * 128);
+    char *confirmaSenha = (char*) malloc(sizeof(char) * 128);
     
     tUsuario *usuario = NULL;
 
     int success = 0;
-    char botaoAux[100]; //só para testar se é não númérico
+    char botaoAux[100];
     int botao;
 
     while(success == 0){
@@ -22,7 +22,7 @@ void telaInicial(char *fileNameUsuarios, char *fileNameHistorico, char *fileName
         }
 
         scanf("%s", botaoAux);
-        botao = atoi(botaoAux); //retorna 0 se não for número e cai em default
+        botao = atoi(botaoAux); // Retorna 0 se não for número e cai em default.
         
         switch(botao){
             case LOGIN:
@@ -117,7 +117,6 @@ void telaInicial(char *fileNameUsuarios, char *fileNameHistorico, char *fileName
                     sleep(TIME);
                 }
         }
-
     }
 
     free(confirmaSenha);
@@ -161,7 +160,7 @@ void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, cha
         idMin = (nPagina - 1) * TAMPAG + 1;
         idMax = nPagina * TAMPAG; 
         
-        scanf("%s", botaoAux); //talvez dê problema
+        scanf("%s", botaoAux);
         botao = atoi(botaoAux);
         
         switch(botao){
@@ -193,8 +192,7 @@ void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, cha
                             idMax -= TAMPAG;
                         }
                     
-                    } else if(strcmp(botao2, "0") == 0){ // voltar
-                        
+                    } else if(strcmp(botao2, "0") == 0){ // Voltar.  
                         break;
                     
                     } else if(botao2int < idMin || botao2int > idMax || botao2int < 0 || botao2int > qtdFilmes){
@@ -229,11 +227,11 @@ void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, cha
                     }else if(botao3 == EXCLUIR){
                         success = 1;
                         usuario = inativarConta(usuario, fileNameUsuarios);
-                        if(verbosidade) printf("Encerrando programa...\n");
+                        if(verbosidade) printf("Excluindo conta...\n");
                         break;
                     
                     }else if(botao3 == VOLT){
-                        break;    //volta para a tela principal    
+                        break;    // Volta para a tela principal.    
                     
                     }else {
                         if(verbosidade){
@@ -246,9 +244,7 @@ void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, cha
                 break;
             
             case PROCURARFILME: 
-                //scanf("%*c");
-                //getchar();
-                if(verbosidade){
+                if(verbosidade){ // Tratando divergência nas entradas com e sem verbosidade na busca de filmes.
                     getchar();
                     limpaTela();
                     printf("Pesquisar: ");
@@ -257,20 +253,12 @@ void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, cha
                 } else{
                     getchar();
                     scanf("%*c");
-                    fgets(busca, 128, stdin); //o filme pode ter até 128 caracteres 
-                    //strcpy(busca, "michael ");
-                    //printf("busca antes %s\n", busca);
-                    //scanf("%s", busca);
+                    fgets(busca, 128, stdin); // O título do filme pode ter até 128 caracteres 
                     int tam = strlen(busca);
-                    // printf("tam antes %d\n", tam);
-                    busca[tam - 2] = '\0';
-                    // int tam2 = strlen(busca);
-                    // printf("tam depois %d\n", tam2);
-                    // printf("busca depois %s\n", busca);
+                    busca[tam - 2] = '\0'; // Subtrai 2 pois a fgets pegou o "\n" da entrada e essa função insere o caracter NULL na string.
+                    
                 }
-                
-                // printf("%s \n", busca);
-                // printf("%s\n", busca);
+            
                 pesquisaFilmes(busca, filmes, qtdFilmes);
                 if(verbosidade) printf("\n1- Voltar\n");
 
@@ -327,9 +315,9 @@ void telaMetaDados(tFilme **filmes, int id, tUsuario *usuario, char* fileNameHis
                 while(1){ 
                     if(verbosidade) printf("Qual a sua avaliacao do filme? ");
                     scanf("%s", notaAux);
-                    if(ehStringNumerica(notaAux) == 1){ // Para diferenciar o '0 float' do retorno 0 da função atof quando seu parâmetro é uma string não numérica
+                    if(ehStringNumerica(notaAux) == 1){ // Para diferenciar o '0 float' do retorno 0 da função atof quando seu parâmetro é uma string não numérica.
                         nota = atof(notaAux);
-                        if(nota <= 10.0){
+                        if((nota >= 0.0 && nota <= 10.0) || nota == -1.0){
                             break;
                         }
                     }
@@ -340,7 +328,6 @@ void telaMetaDados(tFilme **filmes, int id, tUsuario *usuario, char* fileNameHis
                 int dia, mes, ano;
                 while(1){
                     if(verbosidade) printf("Qual a data que voce assistiu o filme? ");
-                    //data = leData(); //falta ver se a data eh valida
                     char data[100];
                     scanf("%s", data);  
                     if(dataValida(data)){
@@ -351,11 +338,7 @@ void telaMetaDados(tFilme **filmes, int id, tUsuario *usuario, char* fileNameHis
                     }
                 }
 
-                // int dia = getDia(data);
-                // int mes = getMes(data);
-                // int ano = getAno(data);
                 tHistorico *hist = getHistorico(usuario);
-                //char *login = getLogin(usuario);
                 int idUsuario = getIdUnicaDaStructUsuario(usuario);
 
                 adicionaFilmeHistorico(hist, id, nota, dia, mes, ano, fileNameHistorico, idUsuario);
@@ -363,7 +346,7 @@ void telaMetaDados(tFilme **filmes, int id, tUsuario *usuario, char* fileNameHis
                 break;
             
             case VOLTAR:
-                encerra = 1; //habilita para sair do while e voltar para a tela principal, pois vamos chamar essa funcao dentro da funcao da tela principal
+                encerra = 1; //Habilita para sair do while e voltar para a tela principal, pois vamos chamar essa funcao dentro da funcao da tela principal.
                 break; 
             
             default: 
@@ -377,7 +360,7 @@ void telaHistorico(tUsuario* usuario, tFilme** filmes, int verbosidade){
     int botao;
     char botaoAux[100];
     tHistorico *hist = getHistorico(usuario);
-    getchar(); //para consumir o /n do ultimo botao
+    getchar(); // Para consumir o"\n" do botão anterior.
     while(1){
         if(verbosidade){
             limpaTela();

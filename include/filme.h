@@ -43,13 +43,6 @@ void imprimeDescricao(tFilme *filme);
 void imprimeFilme(tFilme *filme);
 
 /**
- * @brief Imprime os dados de todos os filmes presentes num vetor de ponteiros de filme.
- * @param filmes Vetor de ponteiros de filme.
- * @param tam Tamanho do vetor (quanto de memória foi alocado).
- **/
-void imprimeTodosOsFilmes(tFilme **filmes, int tam);
-
-/**
  * @brief Imprime na tela os filmes de índice n1 até os filmes de índice n2.
  * Esta função faz tratamento quando o índice n2 ultrapassa a quantidade de filmes e quando n1 é menor que 0.
  * @param filmes Vetor de ponteiros de filme.
@@ -98,4 +91,3 @@ void destroiFilme(tFilme *filme);
 void destroiVetorDeFilmes(tFilme **filmes, char *fileName);
 
 #endif
-

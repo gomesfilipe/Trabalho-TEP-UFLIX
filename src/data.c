@@ -75,7 +75,6 @@ int dataValida(char *str){
     return 1;
 }
 
-
 int datacmp(tData *d1, tData *d2){
     if(d1->ano > d2->ano){
         return 1;

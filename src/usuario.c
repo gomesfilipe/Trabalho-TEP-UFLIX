@@ -1,18 +1,16 @@
 #include "../include/usuario.h"
 
 struct usuario{
-    char *login; // vetor de caracteres
-    char *senha; // vetor de caracteres
-    tHistorico *hist; // único elemento
-    int ativo; // 1 ta ativo e 0 inativo
-    int idUnica;
+    char *login; // String.
+    char *senha; // String.
+    tHistorico *hist; // Ponteiro para histórico.
+    int ativo; // 1 significa ativo, enquanto 0 significa inativo.
+    int idUnica; // Correspondente a linha do usuário no arquivo usuarios.csv.
 };
 
-//temso que destruit o historico e tratatr usuarios ativos e inativos, fazer tratamento disso
-//TODO OK
 int efetuaLogin(char* login, char* senha, char* fileName){
-    char *loginAux = (char*) malloc(sizeof(char) * 100);
-    char *senhaAux = (char*) malloc(sizeof(char) * 100);
+    char *loginAux = (char*) malloc(sizeof(char) * 128);
+    char *senhaAux = (char*) malloc(sizeof(char) * 128);
     int ativo;
     FILE *f = fopen(fileName, "r");
     if(f== NULL){
@@ -23,8 +21,8 @@ int efetuaLogin(char* login, char* senha, char* fileName){
     for(int i=0; i < contaLinhasCSV(fileName); i++){
         fscanf(f, "%[^,]%*c%[^,]%*c%d\n", loginAux, senhaAux, &ativo);
         
-        if(ativo == 1){ //só pode logar usuários ativos
-            if(strcmp(login, loginAux) == 0){ //login existe
+        if(ativo == 1){ // Só podem logar usuários ativos.
+            if(strcmp(login, loginAux) == 0){ // Login existe.
                 if(strcmp(senha, senhaAux) == 0 && ativo == 1){
                     free(loginAux);
                     free(senhaAux);
@@ -46,25 +44,19 @@ int efetuaLogin(char* login, char* senha, char* fileName){
     return USUARIONAOCADASTRADO;
 }
 
-//se tem uma conta inativa, o cadastro pode ter o mesmo uusario essa conta, acrescentar isso NAO ESQUECER
-
-//retonrar uma string, a string vai ser a mensagem q a gnt quer. resolve o "problema" switch e outros
-//TODO  OK
 int cadastraUsuario(char *login, char *senha, char *confirmaSenha, char *fileName){
-    char *loginAux = (char*) malloc(sizeof(char) * 100);
+    char *loginAux = (char*) malloc(sizeof(char) * 128);
     int ativo;
     for(int i = 0; i < strlen(login); i++){ 
-        if(!isalnum(login[i])){ // Verificando se login é alfanumérico
-        return LOGINFORADOPADRAO;
-           // printf("Login fora do padrao.\n");  
+        if(!isalnum(login[i])){ // Verificando se login é alfanumérico.
+        return LOGINFORADOPADRAO;  
             free(loginAux);
             return 0;
         }
     }
     
     for(int i = 0; i < strlen(senha); i++){ 
-        if(!isalnum(senha[i])){ // Verificando se senha é alfanumérica
-            //printf("Senha fora do padrao.\n");  
+        if(!isalnum(senha[i])){ // Verificando se senha é alfanumérica.
             free(loginAux);
             return SENHAFORADOPADRAO;
         }
@@ -72,14 +64,13 @@ int cadastraUsuario(char *login, char *senha, char *confirmaSenha, char *fileNam
     
     FILE *f = fopen(fileName, "r+");
     if(f == NULL){
-        printf("Erro na abertura do arquivo!\n");
+        printf("Erro na abertura do arquivo.\n");
         exit(1);
     }
       
     for(int i = 0; i < contaLinhasCSV(fileName); i++){
         fscanf(f, "%[^,]%*c%*[^,]%*c%d", loginAux, &ativo);
-        if(strcmp(login, loginAux) == 0 && ativo == 1){ //se for igual de usuário
-            //printf("Usuario ja cadastrado.\n");
+        if(strcmp(login, loginAux) == 0 && ativo == 1){ // Se for igual ao usuário.
             free(loginAux);
             fclose(f);
             return USUARIOJACADASTRADO;
@@ -87,17 +78,15 @@ int cadastraUsuario(char *login, char *senha, char *confirmaSenha, char *fileNam
         } else{
             fscanf(f, "%*[^\n]\n"); 
         }
-    } //se passou do for é porque é um login que ainda não tem, ou seja, um novo usuário
+    } // Se passou do for é porque é um login que ainda não tem, ou seja, um novo usuário.
    
-    if(strcmp(senha, confirmaSenha) == 0){ //se senha e confirma senha forem iguais
+    if(strcmp(senha, confirmaSenha) == 0){ // Se senha e confirmaSenha senha forem iguais.
         fprintf(f, "%s,%s,%d\n", login, senha, 1);
-        //printf("Cadastro feito com sucesso!\n");
         free(loginAux);
         fclose(f);
         return CADASTROFEITO;
         
     } else{
-        //printf("Senha incorreta.\n");
         free(loginAux);
         fclose(f);
         return SENHAERRADA;
@@ -105,31 +94,29 @@ int cadastraUsuario(char *login, char *senha, char *confirmaSenha, char *fileNam
 
     free(loginAux);
     fclose(f);
-    return 0; //poderíamos colocar qualquer return aqui, pois nunca chegará nesse ponto, então não teremos problema na hora de printar
+    return 0;//Poderíamos colocar qualquer return aqui, pois nunca chegará nesse ponto, então não teremos problema na hora de printar
 }
 
-//TODO VAI PRECISAR SOBRESCREVER NO CSV OK
 tUsuario* inativarConta(tUsuario *usuario, char *fileNameUsuarios){
     FILE *f = fopen(fileNameUsuarios, "r+");
     if(f == NULL){
-        printf("Erro na abertura do arquivo!\n");
+        printf("Erro na abertura do arquivo.\n");
         exit(1);
     }
     
     usuario->ativo = 0;
     
-    for(int i = 1; i < usuario->idUnica; i++){ // chegando até o início da linha de interesse
-        fscanf(f, "%*[^\n]\n"); //ignora até chegar na linha de interesse
+    for(int i = 1; i < usuario->idUnica; i++){ 
+        fscanf(f, "%*[^\n]\n"); // Ignora até chegar na linha de interesse.
     }
     
-    fscanf(f, "%*[^,]%*c%*[^,]%*c"); //ignora até a parte de ativo
-    fprintf(f, "%d", usuario->ativo); //inativa a conta
+    fscanf(f, "%*[^,]%*c%*[^,]%*c"); // Ignora até a parte de ativo.
+    fprintf(f, "%d", usuario->ativo); // Sobrescreve o caractere 0 sobre o 1, e inativa a conta.
     
     fclose(f);
     return usuario;
 }
 
-//TODO OK
 tUsuario* criaUsuario(char *login, char *senha, char *fileNameHistorico, char *fileNameUsuarios){
     tUsuario *usuario = (tUsuario*) malloc(sizeof(tUsuario));
     usuario->login = login;
@@ -146,14 +133,6 @@ void destroiUsuario(tUsuario *usuario){
     free(usuario->senha);
     destroiHistorico(usuario->hist);
     free(usuario);
-}
-
-void imprimeUsuario(tUsuario *usuario, tFilme **filmes){
-    printf("%s\n", usuario->login);
-    printf("%s\n", usuario->senha);
-    imprimirHistorico(usuario->hist, filmes);
-    printf("\n%d\n", usuario->ativo);
-    printf("%d\n", usuario->idUnica);
 }
 
 tHistorico* getHistorico(tUsuario *usuario){
@@ -188,6 +167,3 @@ int getIdUnicaUsuarioAtivo(char *fileName, char *login){
 int getIdUnicaDaStructUsuario(tUsuario* usuario){
     return usuario->idUnica;
 }
-
-
-

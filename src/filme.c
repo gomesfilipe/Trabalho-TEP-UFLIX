@@ -1,11 +1,8 @@
 #include "../include/filme.h"
-//#include "../include/utils.h"
-
-//#define TAMPAG 10
 
 struct filme{
-    char *titulo; // vetor de caracteres
-    char *descricao; // vetor de caracteres
+    char *titulo;
+    char *descricao;
     float nota;
     int duracao;
     int ano;
@@ -54,7 +51,7 @@ tFilme** leFilmes(char *fileName){
         fscanf(f, "%d,", &ano);
         fscanf(f, "%d,", &duracao);
         fscanf(f, "%f,", &nota);
-        fscanf(f, "%[^\n]\n", descricao); //casos haja aspas, vamos ler e fazer o tratamento de tirar na impressão da descrição
+        fscanf(f, "%[^\n]\n", descricao); // Casos haja aspas, vamos ler e fazer o tratamento de tirar na impressão da descrição.
         id = i + 1; // Para o primeiro filme ser o 1 e não o 0.
         
         filmes[i] = criaFilme(titulo, descricao, nota, duracao, ano, id);
@@ -72,7 +69,7 @@ tFilme** leFilmes(char *fileName){
     return filmes;
 }
 
-void imprimeFilme(tFilme *filme){ //ver se a formatacao ta certa
+void imprimeFilme(tFilme *filme){
     printf("Titulo: %s\n", filme->titulo);
     printf("Ano: %d\n", filme->ano);
     printf("Duracao: %d minutos\n", filme->duracao);
@@ -81,14 +78,9 @@ void imprimeFilme(tFilme *filme){ //ver se a formatacao ta certa
     printf("\n");
 }
 
-void imprimeTodosOsFilmes(tFilme **filmes, int qtdFilmes){
-    for(int i = 0; i < qtdFilmes; i++){
-        imprimeFilme(filmes[i]);
-    }
-}
-
-void listarFilmes(tFilme **filmes, int n1, int n2, int qtdFilmes){ // n1 e n2 são os índices dos filmes no vetor
-    for(int i = n1; i <= n2 && i < qtdFilmes; i++){
+void listarFilmes(tFilme **filmes, int n1, int n2, int qtdFilmes){
+    // n1 e n2 são os índices dos filmes do vetor de filmes que estão na primeira e na última posição da página.
+    for(int i = n1; i <= n2 && i < qtdFilmes; i++){     
         printf("%d- %s\n",filmes[i]->id, filmes[i]->titulo);
     }
 }
@@ -148,9 +140,8 @@ void imprimeDescricao(tFilme *filme){
     printf("\n");
 }
 
-//id eh a posicao do filme no vetor, -1 eh pq o vetor comeca em zero
 void imprimeTituloFilme(tFilme** filmes, int id){
-    printf("%s", filmes[id - 1]->titulo);
+    printf("%s", filmes[id - 1]->titulo); // Id é a posição do filme no vetor, -1 é porque o vetor começa em zero.
 }
 
 void destroiFilme(tFilme *filme){
@@ -165,6 +156,3 @@ void destroiVetorDeFilmes(tFilme **filmes, char *fileName){
     }
     free(filmes);
 }
-
-
-  

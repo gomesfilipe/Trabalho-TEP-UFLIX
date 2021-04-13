@@ -14,8 +14,6 @@
 #define LOGINFORADOPADRAO 3
 #define SENHAFORADOPADRAO 4
 
-
-
 typedef struct usuario tUsuario;
 
 /**
@@ -64,13 +62,6 @@ tUsuario* criaUsuario(char *login, char *senha, char *fileNameHistorico, char *f
  **/
 void destroiUsuario(tUsuario *usuario);
 
-/**
- * @brief Imprime um usuário no terminal.
- * @param usuario Usuário que terá as suas informações impressas na tela.
- * @param filmes Vetor de ponteiros de filme.
- * @return Função sem retorno.
- **/
-void imprimeUsuario(tUsuario *usuario, tFilme **filmes);
 
 /**
  * @brief  Captura o campo histórico de um determinado usuário. Esta função serve para evitar o acesso direto

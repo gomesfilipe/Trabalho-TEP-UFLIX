@@ -58,7 +58,7 @@ Na listagem de filmes, é especificado que o usuário pode ir para a próxima p�
 No programa, há a opção de inativar contas. Uma vez que isso acontece, o login dessa conta fica disponível para cadastro. Inicialmente, implementamos todas funções de caregar o histórico a partir da login do usuário, entretanto, caso uma conta fosse criada com um login que já existiu, seriam carregados no histórico desse novo usuário os filmes que foram assistidos pela conta que foi inativada. Para resolver esse problema, trocamos a lógica do programa para a **idUnica**. Ou seja, no arquivo **"historico.csv"**, explicado mais adiante, a referência passa a ser a idUnica de cada usuário. Essa idUnica é definida a partir da linha que consta o usuário no arquivo usuarios.csv.
 
 ## 3.6 Armazenamento de dados
-Para o armazenamento dos dados que precisam persistir no programa após seu encerramento, utilizamos os arquivos CSV fornecidos na especificação. Também criamos um outro, **"historico.csv"** para auxiliar o armazenamento dos filmes assistidos por todos os usuários sistema.
+Para o armazenamento dos dados que precisam persistir no programa após seu encerramento, utilizamos os arquivos CSV fornecidos na especificação. Também criamos um outro, **"historico.csv"** para auxiliar o armazenamento dos filmes assistidos por todos os usuários sistema.\ Por conta de termos criado um arquivo csv auxiliar, vamos enviá-lo já inicializado com alguns filmes assistidos.
 
 - O arquivo usuarios.csv possui 3 colunas, que representam, respectivamente, o login, a senha e o estado da conta (ativa ou inativa).
 
@@ -70,6 +70,20 @@ Cada filme está em uma linha desse arquivo, sendo que o arquivo contém os film
 Foi sugerido usar a biblioteca **"time.h"** para fazer a ordenação do histórico do usuário em função da data. Entretanto, optamos por fazer sem ela e criamos uma função análoga a **"strcmp"**, da biblioteca **"string.h"**. Chamamos essa função de **"datacmp"**, e ela compara duas datas e nos diz se uma data é anterior, igual, ou posterior a outra. 
 
 ## 3.8 Procurar filmes
-Nessa parte, tivemos um problema na entrada de dados. Quando o programa era executado com verbosidade, entrada e saída ocorriam conforme o esperado. Entretanto, sem verbosidade, a entrada não era capturada corretamente devido a um /n. Por esse motivo, na busca de filmes, implementamos formas diferentes de leitura quando havia e quando não havia verbosidade com auxílio de um if else.
-Também tivemos uma dúvida se a partir desse ponto o usuário poderia assistir ou não algum filme que tenha buscado. Como essa opção não estava presente na especificação, optamos por seguí-la e após a pesquisa de um filme o usuário tem apenas a opção de **"voltar"**.
+Nessa parte, tivemos um problema na entrada de dados. Quando o programa era executado com verbosidade, entrada e saída ocorriam conforme o esperado. Entretanto, sem verbosidade, a entrada não era capturada corretamente devido a um **"/n"**. Para resolver essa questão, utilizamos a função **fgets** que capturava esse mesmo **\n**, entretanto, essa função insere um caracter NULL na string. Para ignorar esses dois caracteres, deslocamos o caractere **"\0** duas casas para a esquerda. 
+Dessa forma, na busca de filmes, implementamos formas diferentes de leitura quando havia e quando não havia verbosidade com auxílio de um if else. 
+Também tivemos uma dúvida se a partir desse ponto o usuário poderia assistir ou não algum filme que tenha buscado. Como essa opção não estava presente na especificação, optamos por seguí-la e após a pesquisa de um filme o usuário tem apenas a opção de **"voltar"**.\
+Optamos por imprimir os filmes buscados pelo usuário acompanhados pela sua respectiva id e não pela ordem de busca (1,2,3,...), pois caso o usuário se interesse por algum filme, ele já sabe qual a sua Id para assistir o filme pela listagem.
 
+## 3.9 Realloc no histórico de filmes do usuário
+Utilizamos a função realloc caso o usuário assista mais filmes do que seu histórico pode armazenar. Mas, para evitar ao máximo o uso dessa função, programamos para inicializar o histórico com todos os seus filmes já assistidos, além de mais 10 espaços de memória reservados. Em outras palavras, caso o usuário ao logar, já tenha assistido **n filmes**, serão reservados **n+10** espaços na memória. Se ele assistir filmes até preencher todo o vetor, o realloc é acionado e reserva mais 10 espaços de memória para o histórico.
+
+# 4. Envio dos arquivos
+Estamos enviando todos os arquivos **".h"**, **".c"**, o **Makefile**, o programa cliente **(main.c)** e também os arquivos **"filmes-grande.csv"**, **"filmes-pequeno.csv"**, **"usuarios.csv"** e **"historico.csv"**.
+
+# 5. Considerações finais
+A compilação do arquivo está gerando diversos warnings, do tipo:
+
+*warning: ignoring return value of ‘scanf’, declared with attribute warn_unused_result*
+
+Como se estivesse esperando um retorno da função scanf, mas o programa está compilando corretamente e isto não está atrapalhando a execução do programa.
