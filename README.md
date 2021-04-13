@@ -82,8 +82,14 @@ Utilizamos a função realloc caso o usuário assista mais filmes do que seu his
 Estamos enviando todos os arquivos **".h"**, **".c"**, o **Makefile**, o programa cliente **(main.c)** e também os arquivos **"filmes-grande.csv"**, **"filmes-pequeno.csv"**, **"usuarios.csv"** e **"historico.csv"**.
 
 # 5. Considerações finais
-A compilação do arquivo está gerando diversos warnings, do tipo:
+A compilação do arquivo estava gerando diversos warnings, do tipo:
 
 *warning: ignoring return value of ‘scanf’, declared with attribute warn_unused_result*
 
-Como se estivesse esperando um retorno da função scanf, mas o programa está compilando corretamente e isto não está atrapalhando a execução do programa.
+Por esperar um retorno da função scanf. Devido a isso, alteramos uma linha do makefile de:
+    CFLAGS := -g -O3
+
+para
+    CFLAGS := -g -O3 -Wno-unused-result
+
+Assim, o compilar do programa não cobra o retorno da função scanf e não aparece nenhum warning na tela.

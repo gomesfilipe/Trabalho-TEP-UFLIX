@@ -1,6 +1,6 @@
 TARGET := tp1
 LIBS := -lm
-CFLAGS := -g -O3
+CFLAGS := -g -O3 -Wno-unused-result
 OBJDIR := obj/
 SRCDIR := src/
 INCLUDEDIR := include/
