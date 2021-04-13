@@ -74,11 +74,11 @@ int EhBissexto(tData *data);
 
 
 /**
- * @brief Verifica se uma data é válida.
- * @param data Ponteiro tData data.
- * @return 1 se a data válida e 0 se não é válida.
+ * @brief Verifica se uma string representa uma data válida.
+ * @param str String a ser avaliada.
+ * @return 1 se a string represente uma data válida, e 0 caso contrário.
  * */
-int dataValida(tData *data);
+int dataValida(char *str);
 
 /**
  * @brief Verifica se d1 é maior, menor ou igual a d2.

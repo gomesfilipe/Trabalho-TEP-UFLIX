@@ -41,7 +41,7 @@ int contaFilmesNoHistoricoCSV(char *fileName, int idUnica){
 tData* leData(){
     int dia, mes, ano;
     scanf("%d/%d/%d", &dia, &mes, &ano);
-    tData *data = criaData(dia, mes, ano);
+    tData *data = criaData(dia, mes, ano); //tem que fazer isso pra passar a data por referencia para o histórico
 
     return data;
 }
@@ -55,6 +55,8 @@ tHistorico* criaPrimeiroHistorico(){   //testamos ta ok
     hist->qtd_filmes_max = AUMENTO;
     return hist;
 }
+
+
 //NAO ESQUECER
 // Caso que o usuário já tem pelo menos 1 filme no histórico.
 //ja deixar as funcoes de leitura de int* notas, int* id aumentadas para evitar realloc

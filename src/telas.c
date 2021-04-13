@@ -255,26 +255,22 @@ void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, cha
                     scanf("%[^\n]", busca);
                 
                 } else{
-                    // getchar();
-                    // scanf("%*c");
-                    // strtok(busca, '\n'); %[^/n] // um jeito que nao pegue o \n e pegue espaço
-                    // char buscar[100];
-                    // for(int i = 0; ; i++){
-                    //     //buscar[i] = getchar();
-                    //     scanf("%c", &buscar[i]);
-                    //     if(buscar[i] == '\n'){
-                    //         buscar[i] = '\0';
-                    //         break;
-                    //     }
-                    // }
-                    //getchar();
-                   // strcpy(busca, buscar);
-                   // fgets(busca, 128, stdin); //o filme pode ter até 128 caracteres 
+                    getchar();
+                    scanf("%*c");
+                    fgets(busca, 128, stdin); //o filme pode ter até 128 caracteres 
+                    //strcpy(busca, "michael ");
+                    //printf("busca antes %s\n", busca);
                     //scanf("%s", busca);
+                    int tam = strlen(busca);
+                    // printf("tam antes %d\n", tam);
+                    busca[tam-2] = '\0';
+                    // int tam2 = strlen(busca);
+                    // printf("tam depois %d\n", tam2);
+                    // printf("busca depois %s\n", busca);
                 }
                 
-                //printf("(%s)\n", busca);
-                printf("%s\n", busca);
+                // printf("%s \n", busca);
+                // printf("%s\n", busca);
                 pesquisaFilmes(busca, filmes, qtdFilmes);
                 if(verbosidade) printf("\n1- Voltar\n");
 
@@ -324,7 +320,6 @@ void telaMetaDados(tFilme **filmes, int id, tUsuario *usuario, char* fileNameHis
 
         switch(botao){
             case ASSISTIR: 
-                limpaTela();
                 encerra = 1;
                 char notaAux[100];
                 float nota;
@@ -342,19 +337,23 @@ void telaMetaDados(tFilme **filmes, int id, tUsuario *usuario, char* fileNameHis
                     if(verbosidade) printf("Nota invalida! Digite novamente\n");
                 }
                 
+                int dia, mes, ano;
                 while(1){
                     if(verbosidade) printf("Qual a data que voce assistiu o filme? ");
-                    data = leData(); //falta ver se a data eh valida
+                    //data = leData(); //falta ver se a data eh valida
+                    char data[100];
+                    scanf("%s", data);  
                     if(dataValida(data)){
+                        sscanf(data, "%d/%d/%d", &dia, &mes, &ano);
                         break;
                     } else{
                         if(verbosidade) printf("Data invalida! Digite novamente\n");
                     }
                 }
 
-                int dia = getDia(data);
-                int mes = getMes(data);
-                int ano = getAno(data);
+                // int dia = getDia(data);
+                // int mes = getMes(data);
+                // int ano = getAno(data);
                 tHistorico *hist = getHistorico(usuario);
                 //char *login = getLogin(usuario);
                 int idUsuario = getIdUnicaDaStructUsuario(usuario);

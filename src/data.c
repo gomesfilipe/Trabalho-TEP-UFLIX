@@ -63,19 +63,45 @@ int ehBissexto(tData *data){
     return 0;
 }
 
-int dataValida(tData *data){
-    int meses[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+int dataValida(char *str){ 
+    int barras = 0;
+    int tam = strlen(str);
+    
+    for(int i = 0; i < tam; i++){
+        if((str[i] < '0' || str[i] > '9') && str[i] != '/'){
+            return 0;
+        }    
+        if(str[i] == '/'){      
+            barras++; 
+            if(str[i - 1] == '/' && i > 0){
+                return 0;
+            }   
+        }
+    }
 
+    if(barras != 2 || str[0] == '/' || str[tam - 1] == '/' ){
+        return 0;
+    }
+
+    int dia, mes, ano;
+    sscanf(str, "%d/%d/%d", &dia, &mes, &ano);
+
+    tData* data = criaData(dia, mes, ano); 
+
+    int meses[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    
     if(ehBissexto(data)){
         meses[1]++; // Ajustando quantidade de dias de fevereiro para 29
     }
 
     if(data->mes > 12 || data->mes < 1 || data->dia > meses[data->mes - 1] || data->dia < 1){
+        free(data);
         return 0;
     }
-
+    free(data);
     return 1;
 }
+
 
 int datacmp(tData *d1, tData *d2){
     if(d1->ano > d2->ano){

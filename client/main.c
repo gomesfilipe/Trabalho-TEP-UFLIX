@@ -29,6 +29,9 @@ int main(int argc, char** argv){ //argv é vetor de string
     // imprimirHistorico(h, filmes);
     //imprimeHistoricoCSV(15, 10.0, 12 , 04 , 2021, fileNameHistorico, 10);
 
+    // char string[] = "filipe";
+    // printf("tamanho filipe [%ld]\n", strlen(string));
+
     return 0;
 } 
 

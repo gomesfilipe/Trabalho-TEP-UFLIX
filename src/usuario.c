@@ -1,5 +1,4 @@
 #include "../include/usuario.h"
-//#include "../include/utils.h"
 
 struct usuario{
     char *login; // vetor de caracteres
@@ -190,6 +189,5 @@ int getIdUnicaDaStructUsuario(tUsuario* usuario){
     return usuario->idUnica;
 }
 
-//verbosidade , um dos botoes n foi
 
-//conta ativa e inativa
+
