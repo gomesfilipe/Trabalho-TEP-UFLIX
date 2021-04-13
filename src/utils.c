@@ -49,8 +49,8 @@ int ehStringNumerica(char *str){
                 if(str[i] > '9' || str[i] < '0'){
                     return 0; //nao eh float
                 }
-                return 1; //eh float
             }
+            return 1; //eh float
             break;
         
         case 1:
