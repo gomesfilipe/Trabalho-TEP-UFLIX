@@ -69,14 +69,11 @@ int cadastraUsuario(char *login, char *senha, char *confirmaSenha, char *fileNam
     }
       
     for(int i = 0; i < contaLinhasCSV(fileName); i++){
-        fscanf(f, "%[^,]%*c%*[^,]%*c%d", loginAux, &ativo);
+        fscanf(f, "%[^,]%*c%*[^,]%*c%d\n", loginAux, &ativo);
         if(strcmp(login, loginAux) == 0 && ativo == 1){ // Se for igual ao usuário.
             free(loginAux);
             fclose(f);
             return USUARIOJACADASTRADO;
-
-        } else{
-            fscanf(f, "%*[^\n]\n"); 
         }
     } // Se passou do for é porque é um login que ainda não tem, ou seja, um novo usuário.
    

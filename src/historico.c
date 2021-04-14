@@ -71,7 +71,7 @@ tHistorico* resgataHistorico(int idUnica, char *fileName){
 
     for(int i = 0; i < contaLinhasCSV(fileName); i++){
         fscanf(f, "%d,", &idUnicaAux);
-        if(idUnicaAux == idUnica){  //se forem iguais
+        if(idUnicaAux == idUnica){  // Se forem iguais.
             fscanf(f, "%d,", &hist->id[posHist]);
             fscanf(f, "%f,", &hist->notas[posHist]);
             fscanf(f, "%d/%d/%d\n", &diaAux, &mesAux, &anoAux);
@@ -89,7 +89,7 @@ tHistorico* resgataHistorico(int idUnica, char *fileName){
 }
 
 tHistorico* adicionaFilmeHistorico(tHistorico *hist, int id, float nota, int dia, int mes, int ano, char *fileName, int idUnica){ 
-    if(hist->qtd_filmes_atual == hist->qtd_filmes_max){ //Se precisar de mais espaço prara adicionar um filme
+    if(hist->qtd_filmes_atual == hist->qtd_filmes_max){ // Se precisar de mais espaço para adicionar um filme.
         hist->id = (int*) realloc(hist->id, sizeof(int) * (hist->qtd_filmes_atual + AUMENTO));
         hist->notas = (float*) realloc (hist->notas, sizeof(float) * (hist->qtd_filmes_atual + AUMENTO));
         hist->data = (tData**) realloc (hist->data, sizeof(tData*) * (hist->qtd_filmes_atual + AUMENTO));
@@ -160,7 +160,7 @@ void imprimirHistorico(tHistorico *hist, tFilme **filmes){
         printf(" - ");
         imprimeTituloFilme(filmes, hist->id[i]);
         printf(": ");
-        if(hist->notas[i] < 0 || hist->notas[i] > 10){
+        if(hist->notas[i] == -1){
             printf("Sem avaliacao\n");
         
         } else{
@@ -171,7 +171,7 @@ void imprimirHistorico(tHistorico *hist, tFilme **filmes){
 
 void imprimeHistoricoCSV(int id, float nota, int dia, int mes, int ano, char *fileName, int idUsuario){ 
     char *nomeAux = (char*) malloc(sizeof(char) * 100);
-    FILE *f = fopen(fileName, "a"); //modo append
+    FILE *f = fopen(fileName, "a"); // Modo append.
     if(f == NULL){
         printf("Erro na abertura do arquivo!\n");
         exit(1);

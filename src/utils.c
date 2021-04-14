@@ -28,44 +28,6 @@ void limpaTela(){
     system("clear"); // Adaptar dependendo do SO: "cls" para windows e "clear" para linux.
 }
 
-// int ehStringNumerica(char *str){
-//     int qtdPontos = 0;
-//     int tam = strlen(str);
-    
-//     for(int i = 0; i < tam; i++){
-//         if(str[i] == '.'){
-//             qtdPontos++;
-//         }
-//     }
-    
-//     switch(qtdPontos){
-//         case 0:
-//             for(int i = 0; i < tam; i++){
-//                 if(str[i] > '9' || str[i] < '0'){
-//                     return 0; // Não é float.
-//                 }
-//             }
-//             return 1; // É float.
-//             break;
-        
-//         case 1:
-//             if(str[0] == '.' || str[tam - 1] == '.'){ // Se o ponto estiver nas extremidades está errado, por exemplo "1." ou ".5".
-//                 return 0;
-//             }
-            
-//             for(int i = 0; i < tam; i++){
-//                 if((str[i] > '9' || str[i] < '0') && str[i] != '.'){ 
-//                     return 0;
-//                 }
-//             }
-//             return 1;
-//             break; 
-        
-//         default:
-//             return 0;       
-//     }
-// }
-
 int ehStringNumerica(char *str){
     int qtdPontos = 0, qtdTracos = 0;
     int tam = strlen(str);
