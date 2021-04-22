@@ -59,6 +59,10 @@ int dataValida(char *str){
     int dia, mes, ano;
     sscanf(str, "%d/%d/%d", &dia, &mes, &ano);
 
+    if(ano != 2021){
+        return 0;
+    }
+
     tData* data = criaData(dia, mes, ano); 
 
     int meses[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};

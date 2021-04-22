@@ -3,9 +3,12 @@
 #define TIME 2
 
 void telaInicial(char *fileNameUsuarios, char *fileNameHistorico, char *fileNameFilmes, tFilme **filmes, int verbosidade){
-    char *login = (char*) malloc(sizeof(char) * 128);
-    char *senha = (char*) malloc(sizeof(char) * 128);
-    char *confirmaSenha = (char*) malloc(sizeof(char) * 128);
+    // char *login = (char*) malloc(sizeof(char) * 128);            // Antes da entrevista.
+    // char *senha = (char*) malloc(sizeof(char) * 128);            // Antes da entrevista.
+    // char *confirmaSenha = (char*) malloc(sizeof(char) * 128);    // Antes da entrevista.
+    char login[128];
+    char senha[128];
+    char confirmaSenha[128];
     
     tUsuario *usuario = NULL;
 
@@ -118,20 +121,27 @@ void telaInicial(char *fileNameUsuarios, char *fileNameHistorico, char *fileName
                 }
         }
     }
+    //Antes da entrevista
+    // free(confirmaSenha);
+    // if(usuario != NULL){
+    //     destroiUsuario(usuario);
+    
+    // } else{
+    //     free(login);
+    //     free(senha);
+    // }
 
-    free(confirmaSenha);
     if(usuario != NULL){
         destroiUsuario(usuario);
-    
-    } else{
-        free(login);
-        free(senha);
     }
 }
  
 void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, char *fileNameHistorico, int verbosidade, char *fileNameUsuarios){
-    char *botao2 = (char*) malloc(sizeof(char) * 100);
-    char *busca = (char*) malloc(sizeof(char) * 128);
+    // char *botao2 = (char*) malloc(sizeof(char) * 100); // Antes da entrevista
+    // char *busca = (char*) malloc(sizeof(char) * 128);  // Antes da entrevista
+    char botao2[100];
+    char busca[128];
+
     int qtdFilmes = contaLinhasCSV(fileNameFilmes);
     int success = 0;
     int botao2int;
@@ -288,8 +298,8 @@ void telaPrincipal(tUsuario* usuario, tFilme **filmes, char *fileNameFilmes, cha
         }
     }
 
-    free(botao2);
-    free(busca);
+    // free(botao2); // Antes da entrevista.
+    // free(busca); // Antes da entrevista.
 }
 
 void telaMetaDados(tFilme **filmes, int id, tUsuario *usuario, char* fileNameHistorico, int verbosidade){

@@ -93,3 +93,15 @@ para
     CFLAGS := -g -O3 -Wno-unused-result
 
 Assim, o compilar do programa não cobra o retorno da função scanf e não aparece nenhum warning na tela.
+
+# 6. Mudanças após a entrevista
+Na entrevista sobre trabalho com os monitores, foi dado o feedback sobre o código. Eles sugeriram algumas mudanças pontuais que tornariam o programa mais eficiente. Para efeito de comparação, deixamos comentadas as partes que precisavam de mudanças e logo embaixo fizemos as alterações necessárias.
+
+## 6.1 Datas válidas
+Inicialmente, o programa considerava datas futuras como válidas. Por exemplo, caso o usuário informasse que assitiu um filme no dia 17/06/3000 , o programa não apontaria erro. Após a entrevista, corrigimos o problema fixando o ano em 2021, caso o usuário digite alguma  data que não esse desse ano, o programa apontará como data inválida.
+
+## 6.2 Inicializando usuário com referências fora da TAD
+Na criação de um usuário, os campos **"usuario->login"** e **"usuario->senha"** estavam sendo inicializados recebendo uma referência de fora da função **"criaUsuario"**. Como essa situação foge do conceito de TADs, passamos para alocação estática as strings auxiliares **"login"** e **"senha"**, e para inicializar os respectivos campos da struct, aplicamos a função **"strdup"**. Assim, a responsabilidade sobre a questão da alocação de memória para um usuário está apenas sob a função **"criaUsuario"**.
+
+## 6.3 Realloc dos filmes
+Por ser uma função muito custosa para a memória, procuramos evitar o uso de realloc. Dessa forma, criamos uma função para verificar a quantidade exata de filmes no arquivo CSV e assim, alocávamos a quantidade exata de memória para o vetor de filmes. Os monitores nos instruíram a utilizar um tamanho inicial para os filmes e realocar, caso necessário. Implementar o código dessa forma tem o intuito de evitar uma dupla de leitura do arquivo de entrada, o que pode atrapalhar o tempo de execução do programa em arquivos maiores. Por causa disso, fizemos as devidas modificações.

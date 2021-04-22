@@ -22,30 +22,35 @@ tFilme* criaFilme(char *titulo, char *descricao, float nota, int duracao, int an
 }
 
 tFilme** leFilmes(char *fileName){
-    char *titulo = (char*) malloc(sizeof(char) * 128 + 1); 
-    char *descricao = (char*) malloc(sizeof(char) * 256 + 1); 
+    // char *titulo = (char*) malloc(sizeof(char) * 128 + 1); // Antes da entrevista.
+    // char *descricao = (char*) malloc(sizeof(char) * 256 + 1); // Antes da entrevista.
+    char titulo[129];
+    char descricao[257];
     float nota; 
     int duracao;
     int ano; 
     int id;
     int i = 0;
     char c;
-    
-    int qtdFilmes = contaLinhasCSV(fileName);
-    FILE *f = fopen(fileName, "r");
+    int tam = 500;
+
+    // int qtdFilmes = contaLinhasCSV(fileName); // Antes da entrevista.
+    FILE *f = fopen(fileName, "r");  
 
     if(f == NULL){
         printf("Erro na abertura do arquivo");
         exit(1);
     }
     
-    tFilme **filmes = (tFilme**) malloc(sizeof(tFilme*) * qtdFilmes);
+    // tFilme **filmes = (tFilme**) malloc(sizeof(tFilme*) * qtdFilmes); // Antes da entrevista.
+    tFilme **filmes = (tFilme**) malloc(sizeof(tFilme*) * tam); // Alocando 500 espaços de memória para os filmes inicialmente.
 
     if(filmes == NULL){
         printf("Ponteiro Nulo\n");
         exit(1);
     }
 
+    
     while(!feof(f)){
         fscanf(f, "%[^,],", titulo);
         fscanf(f, "%d,", &ano);
@@ -56,15 +61,21 @@ tFilme** leFilmes(char *fileName){
         
         filmes[i] = criaFilme(titulo, descricao, nota, duracao, ano, id);
 
+        i++;
+        
         if(feof(f)){
             break;
         }
 
-        i++;
+        // Depois da entrevista.
+        if(i == tam){
+            tam += 500; // Adicionando 500 espaços no tamanho do vetor de filmes.
+            filmes = (tFilme**) realloc(filmes, sizeof(tFilme*) * tam); 
+        }
     }
 
-    free(titulo);
-    free(descricao);
+    // free(titulo); // Antes da entrevista.
+    // free(descricao); //Antes da entrevista.
     fclose(f);
     return filmes;
 }

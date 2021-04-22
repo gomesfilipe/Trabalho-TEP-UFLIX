@@ -23,7 +23,7 @@ int efetuaLogin(char* login, char* senha, char* fileName){
         
         if(ativo == 1){ // Só podem logar usuários ativos.
             if(strcmp(login, loginAux) == 0){ // Login existe.
-                if(strcmp(senha, senhaAux) == 0 && ativo == 1){
+                if(strcmp(senha, senhaAux) == 0){
                     free(loginAux);
                     free(senhaAux);
                     fclose(f);
@@ -116,8 +116,10 @@ tUsuario* inativarConta(tUsuario *usuario, char *fileNameUsuarios){
 
 tUsuario* criaUsuario(char *login, char *senha, char *fileNameHistorico, char *fileNameUsuarios){
     tUsuario *usuario = (tUsuario*) malloc(sizeof(tUsuario));
-    usuario->login = login;
-    usuario->senha = senha;
+    //usuario->login = login;   // Antes da entrevista.
+    //usuario->senha = senha;  // Antes da entrevista.
+    usuario->login = strdup(login);
+    usuario->senha = strdup(senha);
     usuario->ativo = 1;
     usuario->idUnica = getIdUnicaUsuarioAtivo(fileNameUsuarios, login); 
     usuario->hist = resgataHistorico(usuario->idUnica, fileNameHistorico);
